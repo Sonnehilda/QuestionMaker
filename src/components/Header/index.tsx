@@ -61,6 +61,10 @@ const Contents = styled(Link)`
     color: #666;
   }
 
+  :nth-child(2) {
+    margin-left: 5vh;
+  }
+
   :nth-child(2n) {
     color: #333;
   }
@@ -87,7 +91,7 @@ const Header = () => {
         </Title>
         <Contents to="/make">Make Questions</Contents>
         <Contents to="/review">Saved Questions</Contents>
-        <Contents to="/about">About This Page</Contents>
+        <Contents to="/about">About</Contents>
       </LeftContents>
     </Background>
   );
