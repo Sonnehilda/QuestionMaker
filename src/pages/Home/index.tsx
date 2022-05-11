@@ -1,5 +1,5 @@
-import Banner from "../components/Banner";
-import Phrase from "../components/Phrase";
+import Banner from "../../components/Banner";
+import Phrase from "../../components/Phrase";
 
 const Home = () => {
   return (
