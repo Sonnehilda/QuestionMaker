@@ -3,15 +3,17 @@ import styled from "styled-components";
 const Background = styled.footer`
   background-color: rgba(0, 0, 0, 0.025);
 
+  position: relative;
+  transform: translateY(-100%);
+
   margin-top: 6vh;
 
   width: 100vw;
   height: 6vh;
 
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-evenly;
 `;
 
 const Copyright = styled.div`

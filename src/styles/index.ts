@@ -12,12 +12,14 @@ const GlobalStyle = createGlobalStyle`
         box-shadow: inset 0 0 1.5vh #a1a1a1;
     }
 
+    #root {height: 0;}
+
     html {
         margin: 0;
         padding: 0;
 
         max-width: 100vw;
-        max-height: 100vh;
+        min-height: 100vh;
 
         overflow: overlay;
         overflow-x: hidden;
@@ -28,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
         -webkit-user-select: none;
         user-select: none;
     }
-
 `;
 
 export default GlobalStyle;

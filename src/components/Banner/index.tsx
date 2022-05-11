@@ -17,7 +17,7 @@ const Background = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  filter: drop-shadow(0 0 0.5vh #000);
+  filter: drop-shadow(0 0 0.5vh rgba(0, 0, 0, 0.75));
 `;
 
 const Title = styled.h1`
