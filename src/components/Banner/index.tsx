@@ -4,11 +4,10 @@ import { banner } from "../../assets/images";
 const Background = styled.div`
   background-image: url(${banner});
   background-size: cover;
-
   background-repeat: no-repeat;
 
   width: 100vw;
-  height: 40vh;
+  height: 35vh;
 
   display: flex;
   justify-content: space-evenly;
@@ -41,8 +40,8 @@ const Banner = () => {
   return (
     <Background>
       <TitleWrapper>
-        <Title>Problem Maker</Title>
-        <SubTitle>Make Your Own Various Problems!</SubTitle>
+        <Title>Question Maker</Title>
+        <SubTitle>Make Your Own Various Questions!</SubTitle>
       </TitleWrapper>
     </Background>
   );

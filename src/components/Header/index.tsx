@@ -12,8 +12,8 @@ const Background = styled.header`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  margin: 0;
+const Title = styled(Link)`
+  all: unset;
 
   font-size: 3vh;
   font-weight: 100;
@@ -22,7 +22,14 @@ const Title = styled.h1`
   transition: filter 0.25s;
 
   :hover {
-    filter: drop-shadow(0 0 0.25vh #b0933b) brightness(125%);
+    filter: drop-shadow(0 0 0.5vh #b0933b) brightness(125%);
+  }
+
+  :link {
+    color: #666;
+  }
+  :visited {
+    color: #666;
   }
 
   span {
@@ -75,12 +82,12 @@ const Header = () => {
   return (
     <Background>
       <LeftContents>
-        <Title>
-          <span>P</span>roblem <span>M</span>aker
+        <Title to="/">
+          <span>Q</span>uestion <span>M</span>aker
         </Title>
-        <Contents to="/Make">Make Problems</Contents>
-        <Contents to="/Overview">Saved Problems</Contents>
-        <Contents to="/About">About This Page</Contents>
+        <Contents to="/make">Make Questions</Contents>
+        <Contents to="/review">Saved Questions</Contents>
+        <Contents to="/about">About This Page</Contents>
       </LeftContents>
     </Background>
   );
