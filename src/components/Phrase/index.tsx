@@ -43,10 +43,10 @@ const SubPhrase = styled.p`
 `;
 
 interface PhraseProps {
-  animation: string;
+  animation?: string;
   duration?: string;
-  mainphrase?: string[];
-  subphrase?: string[];
+  mainphrase: string[];
+  subphrase: string[];
 }
 
 const Phrase = ({
