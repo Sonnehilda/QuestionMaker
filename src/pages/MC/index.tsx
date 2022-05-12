@@ -5,7 +5,7 @@ const MakeMultipleChoiceQuestion = () => {
   return (
     <>
       <Banner />
-      <McForm animation="zoom-out" duration="1000" />
+      <McForm animation="fade-up" duration="1000" />
     </>
   );
 };

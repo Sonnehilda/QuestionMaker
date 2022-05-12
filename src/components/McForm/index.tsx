@@ -97,7 +97,6 @@ const ButtonWrapper = styled.form`
 
 const AddButton = styled.button`
   all: unset;
-  outline: 0 solid #000;
 
   background-color: #f6f6f6;
 
@@ -147,8 +146,7 @@ interface McFormProps {
 
 const McForm = ({ animation, duration }: McFormProps) => {
   return (
-    <Background ///data-aos={animation} data-aos-duration={duration}
-    >
+    <Background data-aos={animation} data-aos-duration={duration}>
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Question Name</InputName>
