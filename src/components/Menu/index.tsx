@@ -54,6 +54,14 @@ const Card = styled(Link)<CardProps>`
     filter: drop-shadow(0 0 1vh #fff) brightness(110%);
   }
 
+  div {
+    transition: color 0.25s;
+  }
+
+  :hover div {
+    color: #fff;
+  }
+
   :before {
     position: absolute;
     top: 0;
@@ -76,7 +84,7 @@ const Card = styled(Link)<CardProps>`
   }
 
   :hover::before {
-    filter: brightness(90%) blur(0.25vh);
+    filter: brightness(90%) blur(0.1vh);
   }
 `;
 
@@ -87,12 +95,11 @@ const MenuTitle = styled.div`
 `;
 
 const Title = styled.div`
-  color: #fff;
   font-size: 3vh;
   font-weight: 100;
   text-align: center;
 
-  filter: drop-shadow(0 0 0.25vh #000);
+  filter: drop-shadow(0 0 0.5vh #000);
 `;
 
 interface MenuProps {

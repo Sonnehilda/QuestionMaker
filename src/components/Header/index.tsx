@@ -44,6 +44,7 @@ const Contents = styled(Link)`
   margin-left: 2.5vh;
   margin-right: 2.5vh;
 
+  color: #666;
   font-size: 2vh;
   font-weight: 100;
 

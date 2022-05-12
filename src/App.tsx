@@ -4,6 +4,7 @@ import Footer from "./components/Footer/Index";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Make from "./pages/Make";
+import MakeMultipleChoiceQuestion from "./pages/MC";
 import GlobalStyle from "./styles";
 
 const Wrapper = styled.div`
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/make" element={<Make />} />
+          <Route path="/make/mc" element={<MakeMultipleChoiceQuestion />} />
         </Routes>
       </Wrapper>
       <Footer />
