@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Footer from "./components/Footer/Index";
 import Header from "./components/Header";
 import Home from "./pages/Home";
+import Make from "./pages/Make";
 import GlobalStyle from "./styles";
 
 const Wrapper = styled.div`
@@ -18,6 +19,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/make" element={<Make />} />
         </Routes>
       </Wrapper>
       <Footer />
