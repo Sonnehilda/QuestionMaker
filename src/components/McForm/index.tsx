@@ -17,20 +17,24 @@ const Background = styled.div`
 `;
 
 const Leave = styled(Link)`
-  position: absolute;
-  top: 1.5vh;
-  left: 16vh;
+  margin-right: 69vh;
 
   color: #666;
   font-size: 1.5vh;
+  text-decoration: none;
 
   cursor: pointer;
+  transition: filter 0.25s;
 
   :link {
     color: #666;
   }
   :visited {
     color: #666;
+  }
+
+  :hover {
+    filter: brightness(150%);
   }
 `;
 
@@ -83,7 +87,7 @@ const Input = styled.input`
   }
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.form`
   margin-bottom: 3vh;
 
   display: flex;
@@ -93,6 +97,7 @@ const ButtonWrapper = styled.div`
 
 const AddButton = styled.button`
   all: unset;
+  outline: 0 solid #000;
 
   background-color: #f6f6f6;
 
@@ -142,7 +147,8 @@ interface McFormProps {
 
 const McForm = ({ animation, duration }: McFormProps) => {
   return (
-    <Background data-aos={animation} data-aos-duration={duration}>
+    <Background ///data-aos={animation} data-aos-duration={duration}
+    >
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Question Name</InputName>
@@ -150,7 +156,7 @@ const McForm = ({ animation, duration }: McFormProps) => {
       </InputWrapper>
       <InputWrapper>
         <InputName>Add Option</InputName>
-        <ButtonWrapper>
+        <ButtonWrapper onSubmit={(e) => e.preventDefault()}>
           <Input />
           <AddButton>Add</AddButton>
         </ButtonWrapper>

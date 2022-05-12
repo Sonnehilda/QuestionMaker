@@ -44,6 +44,8 @@ const Card = styled(Link)<CardProps>`
   justify-content: center;
   align-items: center;
 
+  color: #ccc;
+
   border: 0.1vh solid #000;
   border-radius: 0.5vh;
   cursor: pointer;
