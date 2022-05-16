@@ -1,5 +1,7 @@
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Option from "../Option";
 
 const Background = styled.div`
   padding-top: 3vh;
@@ -145,6 +147,17 @@ interface McFormProps {
 }
 
 const McForm = ({ animation, duration }: McFormProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [options, setOptions] = useState<string[]>([]);
+
+  const createOption = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (inputRef.current && !options.includes(inputRef.current.value)) {
+      setOptions([...options, inputRef.current.value]);
+      inputRef.current.value = "";
+    }
+  };
+
   return (
     <Background data-aos={animation} data-aos-duration={duration}>
       <Leave to="/make">← Go back</Leave>
@@ -154,13 +167,22 @@ const McForm = ({ animation, duration }: McFormProps) => {
       </InputWrapper>
       <InputWrapper>
         <InputName>Add Option</InputName>
-        <ButtonWrapper onSubmit={(e) => e.preventDefault()}>
-          <Input />
+        <ButtonWrapper onSubmit={(e) => createOption(e)}>
+          <Input ref={inputRef} maxLength={100} />
           <AddButton>Add</AddButton>
         </ButtonWrapper>
       </InputWrapper>
       <InputWrapper>
         <InputName>Options</InputName>
+        {options.map((p, i) => (
+          <Option
+            key={i}
+            options={options}
+            setOptions={setOptions}
+            index={i + 1}
+            option={p}
+          />
+        ))}
       </InputWrapper>
       <Button>Make One!</Button>
     </Background>
