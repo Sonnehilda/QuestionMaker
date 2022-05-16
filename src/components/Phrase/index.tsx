@@ -62,11 +62,11 @@ const Phrase = ({
   return (
     <Background data-aos={animation} data-aos-duration={duration}>
       <PhraseWrapper>
-        {mainphrase?.map((p) => (
-          <MainPhrase>{p}</MainPhrase>
+        {mainphrase?.map((p, i) => (
+          <MainPhrase key={i}>{p}</MainPhrase>
         ))}
-        {subphrase?.map((p) => (
-          <SubPhrase>{p}</SubPhrase>
+        {subphrase?.map((p, i) => (
+          <SubPhrase key={i}>{p}</SubPhrase>
         ))}
       </PhraseWrapper>
     </Background>
