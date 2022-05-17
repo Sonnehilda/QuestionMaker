@@ -144,9 +144,10 @@ const Button = styled.button`
 interface McFormProps {
   animation: string;
   duration: string;
+  setWarning: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const McForm = ({ animation, duration }: McFormProps) => {
+const McForm = ({ animation, duration, setWarning }: McFormProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [options, setOptions] = useState<string[]>([]);
 
@@ -155,6 +156,9 @@ const McForm = ({ animation, duration }: McFormProps) => {
     if (inputRef.current && !options.includes(inputRef.current.value)) {
       setOptions([...options, inputRef.current.value]);
       inputRef.current.value = "";
+      setWarning("");
+    } else {
+      setWarning("Option already exists!");
     }
   };
 
@@ -181,6 +185,7 @@ const McForm = ({ animation, duration }: McFormProps) => {
             setOptions={setOptions}
             index={i + 1}
             option={p}
+            setWarning={setWarning}
           />
         ))}
       </InputWrapper>
