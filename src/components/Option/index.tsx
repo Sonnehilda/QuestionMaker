@@ -50,15 +50,23 @@ interface OptionsProps {
   setOptions: React.Dispatch<React.SetStateAction<string[]>>;
   index: number;
   option: string;
+  setWarning: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Options = ({ options, setOptions, index, option }: OptionsProps) => {
+const Options = ({
+  options,
+  setOptions,
+  index,
+  option,
+  setWarning,
+}: OptionsProps) => {
   const deleteOption = () => {
     setOptions(
       options.filter((s) => {
         return s !== option;
       })
     );
+    setWarning("");
   };
 
   return (
