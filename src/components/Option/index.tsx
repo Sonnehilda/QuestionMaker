@@ -21,6 +21,17 @@ const Background = styled.div`
   :last-child {
     margin-bottom: 1.5vh;
   }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  animation: fadeIn 0.5s ease-out;
 `;
 
 const Phrase = styled.div`
