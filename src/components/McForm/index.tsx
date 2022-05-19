@@ -148,17 +148,36 @@ interface McFormProps {
 }
 
 const McForm = ({ animation, duration, setWarning }: McFormProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const optionInputRef = useRef<HTMLInputElement>(null);
   const [options, setOptions] = useState<string[]>([]);
 
   const createOption = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (inputRef.current && !options.includes(inputRef.current.value)) {
-      setOptions([...options, inputRef.current.value]);
-      inputRef.current.value = "";
+    if (
+      optionInputRef.current &&
+      !options.includes(optionInputRef.current.value) &&
+      optionInputRef.current.value.length > 0
+    ) {
+      setOptions([...options, optionInputRef.current.value]);
+      optionInputRef.current.value = "";
       setWarning("");
-    } else {
+    } else if (
+      optionInputRef.current &&
+      optionInputRef.current.value.length <= 0
+    ) {
+      setWarning("Please type something!");
+    } else if (
+      optionInputRef.current &&
+      options.includes(optionInputRef.current.value)
+    ) {
       setWarning("Option already exists!");
+    }
+  };
+
+  const makeQuestion = () => {
+    if (titleInputRef.current && titleInputRef.current.value === "") {
+      setWarning("Please type something!");
     }
   };
 
@@ -167,12 +186,12 @@ const McForm = ({ animation, duration, setWarning }: McFormProps) => {
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Question Name</InputName>
-        <Input />
+        <Input ref={titleInputRef} maxLength={100} />
       </InputWrapper>
       <InputWrapper>
         <InputName>Add Option</InputName>
         <ButtonWrapper onSubmit={(e) => createOption(e)}>
-          <Input ref={inputRef} maxLength={100} />
+          <Input ref={optionInputRef} />
           <AddButton>Add</AddButton>
         </ButtonWrapper>
       </InputWrapper>
@@ -189,7 +208,7 @@ const McForm = ({ animation, duration, setWarning }: McFormProps) => {
           />
         ))}
       </InputWrapper>
-      <Button>Make One!</Button>
+      <Button onClick={() => makeQuestion()}>Make One!</Button>
     </Background>
   );
 };
