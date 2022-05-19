@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Background = styled.div`
-  margin-top: 1.5vh;
+  padding-bottom: 2vh;
+  margin-top: 2vh;
 
   width: 76vh;
-  height: 6vh;
 
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@ const Background = styled.div`
   border-bottom: 0.1vh solid #000;
 
   :nth-child(2) {
-    margin-top: 0;
+    margin-top: 0.5vh;
   }
   :last-child {
     margin-bottom: 1.5vh;
