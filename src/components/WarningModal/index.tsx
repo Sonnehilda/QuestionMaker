@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Background = styled.div`
-  background-color: #eee;
+  background-color: #f6f6f6;
 
   position: fixed;
 
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 
 const Message = styled.div`
   font-size: 2vh;
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 const Button = styled.button`
