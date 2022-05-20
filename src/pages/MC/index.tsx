@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { NavigateFunction } from "react-router-dom";
 
 import Banner from "../../components/Banner";
 import McForm from "../../components/McForm";
 import WarningModal from "../../components/WarningModal";
 
-const MakeMultipleChoiceQuestion = () => {
+interface McProps {
+  navigate: NavigateFunction;
+}
+
+const MakeMultipleChoiceQuestion = ({ navigate }: McProps) => {
   const [warning, setWarning] = useState<string>("");
 
   return (
@@ -18,6 +23,7 @@ const MakeMultipleChoiceQuestion = () => {
         duration="1000"
         warning={warning}
         setWarning={setWarning}
+        navigate={navigate}
       />
     </>
   );
