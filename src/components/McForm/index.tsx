@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavigateFunction } from "react-router-dom";
 import Option from "../Option";
+import {
+  OptionAlreadyExistException,
+  OptionNotExistException,
+  OptionNotFulfilledException,
+  SucceededMessage,
+  TitleNotExistException,
+} from "./constant";
 
 const Background = styled.div`
   padding-top: 3vh;
@@ -150,9 +157,16 @@ interface McFormProps {
   duration: string;
   warning: string;
   setWarning: React.Dispatch<React.SetStateAction<string>>;
+  navigate: NavigateFunction;
 }
 
-const McForm = ({ animation, duration, warning, setWarning }: McFormProps) => {
+const McForm = ({
+  animation,
+  duration,
+  warning,
+  setWarning,
+  navigate,
+}: McFormProps) => {
   const warningRef = useRef<string>("");
   const titleInputRef = useRef<HTMLInputElement>(null);
   const optionInputRef = useRef<HTMLInputElement>(null);
@@ -194,20 +208,32 @@ const McForm = ({ animation, duration, warning, setWarning }: McFormProps) => {
       optionInputRef.current &&
       optionInputRef.current.value.length <= 0
     ) {
-      setWarning("Please type something!");
+      setWarning(OptionNotExistException);
     } else if (
       optionInputRef.current &&
       options.includes(optionInputRef.current.value)
     ) {
-      setWarning("Option already exists!");
+      setWarning(OptionAlreadyExistException);
     }
   };
 
   const makeQuestion = () => {
     if (titleInputRef.current && titleInputRef.current.value === "") {
-      setWarning("Title field is missing!");
+      setWarning(TitleNotExistException);
     } else if (options.length < 2) {
-      setWarning("Make at least 2 questions!");
+      setWarning(OptionNotFulfilledException);
+    } else if (titleInputRef.current) {
+      localStorage.setItem(
+        titleInputRef.current.value,
+        JSON.stringify(options)
+      );
+      alert(
+        SucceededMessage[0] +
+          `"${titleInputRef.current.value}"` +
+          SucceededMessage[1]
+      );
+      alert(SucceededMessage[2]);
+      navigate("/make", { replace: true });
     }
   };
 
