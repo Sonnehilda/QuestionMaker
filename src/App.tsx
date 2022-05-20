@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "./components/Footer/Index";
 import Header from "./components/Header";
@@ -13,19 +13,24 @@ const Wrapper = styled.div`
 `;
 
 function App() {
+  const navigate = useNavigate();
+
   return (
-    <Router>
+    <>
       <GlobalStyle />
       <Wrapper>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/make" element={<Make />} />
-          <Route path="/make/mc" element={<MakeMultipleChoiceQuestion />} />
+          <Route
+            path="/make/mc"
+            element={<MakeMultipleChoiceQuestion navigate={navigate} />}
+          />
         </Routes>
       </Wrapper>
       <Footer />
-    </Router>
+    </>
   );
 }
 
