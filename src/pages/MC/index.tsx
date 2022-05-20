@@ -13,7 +13,12 @@ const MakeMultipleChoiceQuestion = () => {
         <WarningModal warning={warning} setWarning={setWarning} />
       )}
       <Banner />
-      <McForm animation="fade-up" duration="1000" setWarning={setWarning} />
+      <McForm
+        animation="fade-up"
+        duration="1000"
+        warning={warning}
+        setWarning={setWarning}
+      />
     </>
   );
 };
