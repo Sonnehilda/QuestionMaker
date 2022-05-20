@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Option from "../Option";
@@ -139,18 +139,46 @@ const Button = styled.button`
   :hover {
     filter: brightness(95%) drop-shadow(0 0 0.25vh #ddd);
   }
+
+  :focus {
+    filter: brightness(95%) drop-shadow(0 0 0.25vh #ddd);
+  }
 `;
 
 interface McFormProps {
   animation: string;
   duration: string;
+  warning: string;
   setWarning: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const McForm = ({ animation, duration, setWarning }: McFormProps) => {
+const McForm = ({ animation, duration, warning, setWarning }: McFormProps) => {
+  const warningRef = useRef<string>("");
   const titleInputRef = useRef<HTMLInputElement>(null);
   const optionInputRef = useRef<HTMLInputElement>(null);
   const [options, setOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    warningRef.current = warning;
+  }, [warning]);
+
+  useEffect(() => {
+    titleInputRef.current?.focus();
+
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        if (warningRef.current !== "") setWarning("");
+        else if (titleInputRef.current === document.activeElement)
+          makeQuestion();
+      }
+      if (e.key === "Escape") {
+        if (warningRef.current !== "") setWarning("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
 
   const createOption = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -177,7 +205,9 @@ const McForm = ({ animation, duration, setWarning }: McFormProps) => {
 
   const makeQuestion = () => {
     if (titleInputRef.current && titleInputRef.current.value === "") {
-      setWarning("Please type something!");
+      setWarning("Title field is missing!");
+    } else if (options.length < 2) {
+      setWarning("Make at least 2 questions!");
     }
   };
 
@@ -186,13 +216,13 @@ const McForm = ({ animation, duration, setWarning }: McFormProps) => {
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Question Name</InputName>
-        <Input ref={titleInputRef} maxLength={100} />
+        <Input tabIndex={1} ref={titleInputRef} maxLength={100} />
       </InputWrapper>
       <InputWrapper>
         <InputName>Add Option</InputName>
         <ButtonWrapper onSubmit={(e) => createOption(e)}>
-          <Input ref={optionInputRef} />
-          <AddButton>Add</AddButton>
+          <Input tabIndex={2} ref={optionInputRef} />
+          <AddButton tabIndex={-1}>Add</AddButton>
         </ButtonWrapper>
       </InputWrapper>
       <InputWrapper>
@@ -208,7 +238,9 @@ const McForm = ({ animation, duration, setWarning }: McFormProps) => {
           />
         ))}
       </InputWrapper>
-      <Button onClick={() => makeQuestion()}>Make One!</Button>
+      <Button tabIndex={3} onClick={() => makeQuestion()}>
+        Make One!
+      </Button>
     </Background>
   );
 };
