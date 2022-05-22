@@ -1,6 +1,11 @@
 import Banner from "../../components/Banner";
 import Phrase from "../../components/Phrase";
-import { HowToUseSubPhrase, WhatIsQuestionMakerSubPhrase } from "./constant";
+import {
+  HowToUseMainPhrase,
+  HowToUseSubPhrase,
+  WhatIsQuestionMakerMainPhrase,
+  WhatIsQuestionMakerSubPhrase,
+} from "./constant";
 
 const Home = () => {
   return (
@@ -9,13 +14,13 @@ const Home = () => {
       <Phrase
         animation="fade-left"
         duration="1000"
-        mainphrase={["What is Question Maker?"]}
+        mainphrase={WhatIsQuestionMakerMainPhrase}
         subphrase={WhatIsQuestionMakerSubPhrase}
       />
       <Phrase
         animation="fade-right"
         duration="1500"
-        mainphrase={["How to use?"]}
+        mainphrase={HowToUseMainPhrase}
         subphrase={HowToUseSubPhrase}
       />
     </>
