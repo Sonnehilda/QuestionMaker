@@ -9,7 +9,7 @@ interface McProps {
   navigate: NavigateFunction;
 }
 
-const MakeMultipleChoiceQuestion = ({ navigate }: McProps) => {
+const MultipleChoiceQuestion = ({ navigate }: McProps) => {
   const [warning, setWarning] = useState<string>("");
 
   return (
@@ -29,4 +29,4 @@ const MakeMultipleChoiceQuestion = ({ navigate }: McProps) => {
   );
 };
 
-export default MakeMultipleChoiceQuestion;
+export default MultipleChoiceQuestion;

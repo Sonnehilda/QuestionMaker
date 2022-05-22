@@ -168,8 +168,8 @@ const McForm = ({
   navigate,
 }: McFormProps) => {
   const warningRef = useRef<string>("");
-  const titleInputRef = useRef<HTMLInputElement>(null);
-  const optionInputRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const optionRef = useRef<HTMLInputElement>(null);
   const [options, setOptions] = useState<string[]>([]);
 
   useEffect(() => {
@@ -177,13 +177,12 @@ const McForm = ({
   }, [warning]);
 
   useEffect(() => {
-    titleInputRef.current?.focus();
+    titleRef.current?.focus();
 
     const close = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
         if (warningRef.current !== "") setWarning("");
-        else if (titleInputRef.current === document.activeElement)
-          makeQuestion();
+        else if (titleRef.current === document.activeElement) makeQuestion();
       }
       if (e.key === "Escape") {
         if (warningRef.current !== "") setWarning("");
@@ -197,39 +196,30 @@ const McForm = ({
   const createOption = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
-      optionInputRef.current &&
-      !options.includes(optionInputRef.current.value) &&
-      optionInputRef.current.value.length > 0
+      optionRef.current &&
+      !options.includes(optionRef.current.value) &&
+      optionRef.current.value.length > 0
     ) {
-      setOptions([...options, optionInputRef.current.value]);
-      optionInputRef.current.value = "";
+      setOptions([...options, optionRef.current.value]);
+      optionRef.current.value = "";
       setWarning("");
-    } else if (
-      optionInputRef.current &&
-      optionInputRef.current.value.length <= 0
-    ) {
+    } else if (optionRef.current && optionRef.current.value.length <= 0) {
       setWarning(OptionNotExistException);
-    } else if (
-      optionInputRef.current &&
-      options.includes(optionInputRef.current.value)
-    ) {
+    } else if (optionRef.current && options.includes(optionRef.current.value)) {
       setWarning(OptionAlreadyExistException);
     }
   };
 
   const makeQuestion = () => {
-    if (titleInputRef.current && titleInputRef.current.value === "") {
+    if (titleRef.current && titleRef.current.value === "") {
       setWarning(TitleNotExistException);
     } else if (options.length < 2) {
       setWarning(OptionNotFulfilledException);
-    } else if (titleInputRef.current) {
-      localStorage.setItem(
-        titleInputRef.current.value,
-        JSON.stringify(options)
-      );
+    } else if (titleRef.current) {
+      localStorage.setItem(titleRef.current.value, JSON.stringify(options));
       alert(
         SucceededMessage[0] +
-          `"${titleInputRef.current.value}"` +
+          `"${titleRef.current.value}"` +
           SucceededMessage[1]
       );
       alert(SucceededMessage[2]);
@@ -242,12 +232,12 @@ const McForm = ({
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Question Name</InputName>
-        <Input tabIndex={1} ref={titleInputRef} maxLength={100} />
+        <Input tabIndex={1} ref={titleRef} maxLength={100} />
       </InputWrapper>
       <InputWrapper>
         <InputName>Add Option</InputName>
         <ButtonWrapper onSubmit={(e) => createOption(e)}>
-          <Input tabIndex={2} ref={optionInputRef} />
+          <Input tabIndex={2} ref={optionRef} />
           <AddButton tabIndex={-1}>Add</AddButton>
         </ButtonWrapper>
       </InputWrapper>
