@@ -2,9 +2,13 @@ import Banner from "../../components/Banner";
 import Menu from "../../components/Menu";
 import Phrase from "../../components/Phrase";
 import {
+  FlashcardMainPhrase,
   FlashcardSubPhrase,
+  MultipleChoiceQuestionMainPhrase,
   MultipleChoiceQuestionSubPhrase,
+  ShortAnswerQuestionMainPhrase,
   ShortAnswerQuestionSubPhrase,
+  TrueOrFalseQuestionMainPhrase,
   TrueOrFalseQuestionSubPhrase,
 } from "./constant";
 
@@ -15,18 +19,18 @@ const Make = () => {
       <Menu animation="fade-up" duration="1000" />
 
       <Phrase
-        mainphrase={["Multiple Choice Question"]}
+        mainphrase={MultipleChoiceQuestionMainPhrase}
         subphrase={MultipleChoiceQuestionSubPhrase}
       />
       <Phrase
-        mainphrase={["Short Answer Question"]}
+        mainphrase={ShortAnswerQuestionMainPhrase}
         subphrase={ShortAnswerQuestionSubPhrase}
       />
       <Phrase
-        mainphrase={["True or False Question"]}
+        mainphrase={TrueOrFalseQuestionMainPhrase}
         subphrase={TrueOrFalseQuestionSubPhrase}
       />
-      <Phrase mainphrase={["Flashcard"]} subphrase={FlashcardSubPhrase} />
+      <Phrase mainphrase={FlashcardMainPhrase} subphrase={FlashcardSubPhrase} />
     </>
   );
 };
