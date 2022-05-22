@@ -4,7 +4,8 @@ import Footer from "./components/Footer/Index";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Make from "./pages/Make";
-import MakeMultipleChoiceQuestion from "./pages/MC";
+import MultipleChoiceQuestion from "./pages/MC";
+import ShortAnswerQuestion from "./pages/SA";
 import GlobalStyle from "./styles";
 
 const Wrapper = styled.div`
@@ -25,7 +26,11 @@ function App() {
           <Route path="/make" element={<Make />} />
           <Route
             path="/make/mc"
-            element={<MakeMultipleChoiceQuestion navigate={navigate} />}
+            element={<MultipleChoiceQuestion navigate={navigate} />}
+          />
+          <Route
+            path="/make/sa"
+            element={<ShortAnswerQuestion navigate={navigate} />}
           />
         </Routes>
       </Wrapper>
