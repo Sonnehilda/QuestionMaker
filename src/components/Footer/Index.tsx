@@ -4,7 +4,6 @@ const Background = styled.footer`
   background-color: rgba(0, 0, 0, 0.025);
 
   position: relative;
-  transform: translateY(-100%);
 
   margin-top: 6vh;
 

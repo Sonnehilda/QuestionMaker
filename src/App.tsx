@@ -6,11 +6,11 @@ import Home from "./pages/Home";
 import Make from "./pages/Make";
 import MultipleChoiceQuestion from "./pages/MC";
 import ShortAnswerQuestion from "./pages/SA";
+import TrueFalseQuestion from "./pages/TF";
 import GlobalStyle from "./styles";
 
 const Wrapper = styled.div`
   min-height: 88vh;
-  padding-bottom: 6vh;
 `;
 
 function App() {
@@ -31,6 +31,10 @@ function App() {
           <Route
             path="/make/sa"
             element={<ShortAnswerQuestion navigate={navigate} />}
+          />
+          <Route
+            path="/make/tf"
+            element={<TrueFalseQuestion navigate={navigate} />}
           />
         </Routes>
       </Wrapper>
