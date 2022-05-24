@@ -45,7 +45,7 @@ const SubPhrase = styled.p`
 interface PhraseProps {
   animation?: string;
   duration?: string;
-  mainphrase: string[];
+  mainphrase: string;
   subphrase: string[];
 }
 
@@ -62,9 +62,7 @@ const Phrase = ({
   return (
     <Background data-aos={animation} data-aos-duration={duration}>
       <PhraseWrapper>
-        {mainphrase?.map((p, i) => (
-          <MainPhrase key={i}>{p}</MainPhrase>
-        ))}
+        <MainPhrase>{mainphrase}</MainPhrase>
         {subphrase?.map((p, i) => (
           <SubPhrase key={i}>{p}</SubPhrase>
         ))}

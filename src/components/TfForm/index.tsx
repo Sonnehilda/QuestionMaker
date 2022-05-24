@@ -186,8 +186,7 @@ const TfForm = ({
   };
 
   return (
-    <Background //data-aos={animation} data-aos-duration={duration}
-    >
+    <Background data-aos={animation} data-aos-duration={duration}>
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Question Name</InputName>
