@@ -49,12 +49,8 @@ const Card = styled(Link)<CardProps>`
   border: 0.1vh solid #000;
   border-radius: 0.5vh;
   cursor: pointer;
-  filter: drop-shadow(0 0 0.5vh #ccc);
+  filter: drop-shadow(0 0 0.25vh #ccc);
   transition: filter 0.25s;
-
-  :hover {
-    filter: drop-shadow(0 0 1vh #fff) brightness(110%);
-  }
 
   div {
     transition: color 0.25s;
@@ -81,12 +77,12 @@ const Card = styled(Link)<CardProps>`
     background-repeat: no-repeat;
 
     content: "";
-    filter: brightness(85%) blur(0.5vh);
+    filter: drop-shadow(0 0 0.25vh #fff) brightness(100%) blur(0.25vh);
     transition: filter 0.25s;
   }
 
   :hover::before {
-    filter: brightness(90%) blur(0.1vh);
+    filter: drop-shadow(0 0 0.5vh #fff) brightness(85%) blur(0.125vh);
   }
 `;
 

@@ -2,11 +2,12 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "./components/Footer/Index";
 import Header from "./components/Header";
+import FlashCardQuestion from "./pages/share/Make/MakeFlashcard";
 import Home from "./pages/Home";
 import Make from "./pages/Make";
-import MultipleChoiceQuestion from "./pages/MC";
-import ShortAnswerQuestion from "./pages/SA";
-import TrueFalseQuestion from "./pages/TF";
+import MultipleChoiceQuestion from "./pages/share/Make/MakeMultipleChoice";
+import ShortAnswerQuestion from "./pages/share/Make/MakeShortAnswer";
+import TrueFalseQuestion from "./pages/share/Make/MakeTrueFalse";
 import GlobalStyle from "./styles";
 
 const Wrapper = styled.div`
@@ -35,6 +36,10 @@ function App() {
           <Route
             path="/make/tf"
             element={<TrueFalseQuestion navigate={navigate} />}
+          />
+          <Route
+            path="/make/fc"
+            element={<FlashCardQuestion navigate={navigate} />}
           />
         </Routes>
       </Wrapper>

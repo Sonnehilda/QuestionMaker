@@ -21,6 +21,7 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
 
+    color: #000;
     font-size: 2.5vh;
     font-weight: 100;
   }
@@ -29,7 +30,7 @@ const Wrapper = styled.div`
 const True = styled.input`
   all: unset;
 
-  background-color: #006600;
+  background-color: #f6f6f6;
 
   width: 38vh;
   height: 6vh;
@@ -38,22 +39,20 @@ const True = styled.input`
   border-right: 0.025vh solid #000;
   border-top-left-radius: 0.5vh;
   border-bottom-left-radius: 0.5vh;
-  transition: background-color 0.25s;
+  transition: background-color 0.25s, box-shadow 0.25s;
 
   :hover {
-    background-color: #00aa00;
-  }
-  :focus {
-    background-color: #00aa00;
+    background-color: #ccffcc;
   }
   :checked {
-    background-color: #00ff00;
+    background-color: #aaffaa;
+    box-shadow: 0 0 1vh #aaffaa;
   }
 `;
 const False = styled.input`
   all: unset;
 
-  background-color: #660000;
+  background-color: #f6f6f6;
 
   width: 38vh;
   height: 6vh;
@@ -62,16 +61,14 @@ const False = styled.input`
   border-left: 0.025vh solid #000;
   border-top-right-radius: 0.5vh;
   border-bottom-right-radius: 0.5vh;
-  transition: background-color 0.25s;
+  transition: background-color 0.25s, box-shadow 0.25s;
 
   :hover {
-    background-color: #aa0000;
-  }
-  :focus {
-    background-color: #aa0000;
+    background-color: #ffcccc;
   }
   :checked {
-    background-color: #ff0000;
+    background-color: #ffaaaa;
+    box-shadow: 0 0 1vh #ffaaaa;
   }
 `;
 
