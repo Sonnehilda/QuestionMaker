@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link, NavigateFunction } from "react-router-dom";
 import {
   AnswerNotExistException,
   SucceededMessage,
   TitleNotExistException,
-} from "./constant";
-import Switch from "../Switch";
+} from "../genericWarning";
 
 const Background = styled.div`
   padding-top: 3vh;
@@ -119,7 +118,7 @@ const Button = styled.button`
   }
 `;
 
-interface TfFormProps {
+interface SaFormProps {
   animation: string;
   duration: string;
   warning: string;
@@ -127,20 +126,16 @@ interface TfFormProps {
   navigate: NavigateFunction;
 }
 
-const TfForm = ({
+const SaForm = ({
   animation,
   duration,
   warning,
   setWarning,
   navigate,
-}: TfFormProps) => {
-  const [answer, setAnswer] = useState<boolean>();
-
+}: SaFormProps) => {
   const warningRef = useRef<string>("");
   const titleRef = useRef<HTMLInputElement>(null);
-
-  const trueRef = useRef<HTMLInputElement>(null);
-  const falseRef = useRef<HTMLInputElement>(null);
+  const answerRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     warningRef.current = warning;
@@ -152,7 +147,11 @@ const TfForm = ({
     const close = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
         if (warningRef.current !== "") setWarning("");
-        else if (titleRef.current === document.activeElement) makeQuestion();
+        else if (
+          titleRef.current ||
+          answerRef.current === document.activeElement
+        )
+          makeQuestion();
       }
       if (e.key === "Escape") {
         if (warningRef.current !== "") setWarning("");
@@ -166,15 +165,19 @@ const TfForm = ({
   const makeQuestion = () => {
     if (titleRef.current && titleRef.current.value === "") {
       setWarning(TitleNotExistException);
-    } else if (
-      trueRef.current &&
-      trueRef.current.checked === false &&
-      falseRef.current &&
-      falseRef.current.checked === false
-    ) {
+    } else if (answerRef.current && answerRef.current.value.length <= 0) {
       setWarning(AnswerNotExistException);
-    } else if (titleRef.current && answer !== undefined) {
-      localStorage.setItem(titleRef.current.value, JSON.stringify(answer));
+    } else if (titleRef.current && answerRef.current) {
+      const now = Date.now();
+      localStorage.setItem(
+        "SA" + now,
+        JSON.stringify([titleRef.current.value, answerRef.current.value])
+      );
+      if (localStorage.getItem("SA")) {
+        const SA = JSON.parse(localStorage.getItem("SA") || "");
+        localStorage.setItem("SA", JSON.stringify([now, ...SA]));
+      } else localStorage.setItem("SA", JSON.stringify([now]));
+
       alert(
         SucceededMessage[0] +
           `"${titleRef.current.value}"` +
@@ -194,12 +197,7 @@ const TfForm = ({
       </InputWrapper>
       <InputWrapper>
         <InputName>Correct Answer</InputName>
-        <Switch
-          trueRef={trueRef}
-          falseRef={falseRef}
-          answer={answer}
-          setAnswer={setAnswer}
-        />
+        <Input tabIndex={2} ref={answerRef} />
       </InputWrapper>
       <Button tabIndex={3} onClick={() => makeQuestion()}>
         Make One!
@@ -208,4 +206,4 @@ const TfForm = ({
   );
 };
 
-export default TfForm;
+export default SaForm;

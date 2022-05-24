@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, NavigateFunction } from "react-router-dom";
-import Option from "../Option";
 import {
-  OptionAlreadyExistException,
-  OptionNotExistException,
-  OptionNotFulfilledException,
+  AnswerNotExistException,
   SucceededMessage,
   TitleNotExistException,
-} from "./constant";
+} from "../genericWarning";
+import Switch from "../../../Switch";
 
 const Background = styled.div`
   padding-top: 3vh;
@@ -96,37 +94,6 @@ const Input = styled.input`
   }
 `;
 
-const ButtonWrapper = styled.form`
-  margin-bottom: 3vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const AddButton = styled.button`
-  all: unset;
-
-  background-color: #f6f6f6;
-
-  width: 10vh;
-  height: 6vh;
-
-  font-size: 2vh;
-  text-align: center;
-
-  border: 0.1vh solid #000;
-  border-left: none;
-  border-top-right-radius: 0.5vh;
-  border-bottom-right-radius: 0.5vh;
-  cursor: pointer;
-  transition: filter 0.25s;
-
-  :hover {
-    filter: brightness(95%) drop-shadow(0 0 0.25vh #ddd);
-  }
-`;
-
 const Button = styled.button`
   all: unset;
 
@@ -152,7 +119,7 @@ const Button = styled.button`
   }
 `;
 
-interface McFormProps {
+interface TfFormProps {
   animation: string;
   duration: string;
   warning: string;
@@ -160,17 +127,20 @@ interface McFormProps {
   navigate: NavigateFunction;
 }
 
-const McForm = ({
+const TfForm = ({
   animation,
   duration,
   warning,
   setWarning,
   navigate,
-}: McFormProps) => {
+}: TfFormProps) => {
+  const [answer, setAnswer] = useState<boolean>();
+
   const warningRef = useRef<string>("");
   const titleRef = useRef<HTMLInputElement>(null);
-  const optionRef = useRef<HTMLInputElement>(null);
-  const [options, setOptions] = useState<string[]>([]);
+
+  const trueRef = useRef<HTMLInputElement>(null);
+  const falseRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     warningRef.current = warning;
@@ -193,30 +163,27 @@ const McForm = ({
     return () => window.removeEventListener("keydown", close);
   }, []);
 
-  const createOption = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (
-      optionRef.current &&
-      !options.includes(optionRef.current.value) &&
-      optionRef.current.value.length > 0
-    ) {
-      setOptions([...options, optionRef.current.value]);
-      optionRef.current.value = "";
-      setWarning("");
-    } else if (optionRef.current && optionRef.current.value.length <= 0) {
-      setWarning(OptionNotExistException);
-    } else if (optionRef.current && options.includes(optionRef.current.value)) {
-      setWarning(OptionAlreadyExistException);
-    }
-  };
-
   const makeQuestion = () => {
     if (titleRef.current && titleRef.current.value === "") {
       setWarning(TitleNotExistException);
-    } else if (options.length < 2) {
-      setWarning(OptionNotFulfilledException);
-    } else if (titleRef.current) {
-      localStorage.setItem(titleRef.current.value, JSON.stringify(options));
+    } else if (
+      trueRef.current &&
+      trueRef.current.checked === false &&
+      falseRef.current &&
+      falseRef.current.checked === false
+    ) {
+      setWarning(AnswerNotExistException);
+    } else if (titleRef.current && answer !== undefined) {
+      const now = Date.now();
+      localStorage.setItem(
+        "TF" + now,
+        JSON.stringify([titleRef.current.value, answer])
+      );
+      if (localStorage.getItem("TF")) {
+        const TF = JSON.parse(localStorage.getItem("TF") || "");
+        localStorage.setItem("TF", JSON.stringify([now, ...TF]));
+      } else localStorage.setItem("TF", JSON.stringify([now]));
+
       alert(
         SucceededMessage[0] +
           `"${titleRef.current.value}"` +
@@ -235,24 +202,13 @@ const McForm = ({
         <Input tabIndex={1} ref={titleRef} maxLength={100} />
       </InputWrapper>
       <InputWrapper>
-        <InputName>Add Option</InputName>
-        <ButtonWrapper onSubmit={(e) => createOption(e)}>
-          <Input tabIndex={2} ref={optionRef} />
-          <AddButton tabIndex={-1}>Add</AddButton>
-        </ButtonWrapper>
-      </InputWrapper>
-      <InputWrapper>
-        <InputName>Options</InputName>
-        {options.map((p, i) => (
-          <Option
-            key={i}
-            options={options}
-            setOptions={setOptions}
-            index={i + 1}
-            option={p}
-            setWarning={setWarning}
-          />
-        ))}
+        <InputName>Correct Answer</InputName>
+        <Switch
+          trueRef={trueRef}
+          falseRef={falseRef}
+          answer={answer}
+          setAnswer={setAnswer}
+        />
       </InputWrapper>
       <Button tabIndex={3} onClick={() => makeQuestion()}>
         Make One!
@@ -261,4 +217,4 @@ const McForm = ({
   );
 };
 
-export default McForm;
+export default TfForm;
