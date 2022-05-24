@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { NavigateFunction } from "react-router-dom";
 
-import Banner from "../../components/Banner";
-import TfForm from "../../components/TfForm";
-import WarningModal from "../../components/WarningModal";
+import Banner from "../../../../components/Banner";
+import McForm from "../../../../components/share/Form/FormMultipleChoice";
+import WarningModal from "../../../../components/share/Modal/WarningModal";
 
-interface TfProps {
+interface McProps {
   navigate: NavigateFunction;
 }
 
-const TrueFalseQuestion = ({ navigate }: TfProps) => {
+const MultipleChoiceQuestion = ({ navigate }: McProps) => {
   const [warning, setWarning] = useState<string>("");
 
   return (
@@ -18,7 +18,7 @@ const TrueFalseQuestion = ({ navigate }: TfProps) => {
         <WarningModal warning={warning} setWarning={setWarning} />
       )}
       <Banner />
-      <TfForm
+      <McForm
         animation="fade-up"
         duration="1000"
         warning={warning}
@@ -29,4 +29,4 @@ const TrueFalseQuestion = ({ navigate }: TfProps) => {
   );
 };
 
-export default TrueFalseQuestion;
+export default MultipleChoiceQuestion;

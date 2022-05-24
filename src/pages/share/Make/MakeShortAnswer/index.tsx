@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { NavigateFunction } from "react-router-dom";
 
-import Banner from "../../components/Banner";
-import McForm from "../../components/McForm";
-import WarningModal from "../../components/WarningModal";
+import Banner from "../../../../components/Banner";
+import SaForm from "../../../../components/share/Form/FormShortAnswer";
+import WarningModal from "../../../../components/share/Modal/WarningModal";
 
-interface McProps {
+interface SaProps {
   navigate: NavigateFunction;
 }
 
-const MultipleChoiceQuestion = ({ navigate }: McProps) => {
+const ShortAnswerQuestion = ({ navigate }: SaProps) => {
   const [warning, setWarning] = useState<string>("");
 
   return (
@@ -18,7 +18,7 @@ const MultipleChoiceQuestion = ({ navigate }: McProps) => {
         <WarningModal warning={warning} setWarning={setWarning} />
       )}
       <Banner />
-      <McForm
+      <SaForm
         animation="fade-up"
         duration="1000"
         warning={warning}
@@ -29,4 +29,4 @@ const MultipleChoiceQuestion = ({ navigate }: McProps) => {
   );
 };
 
-export default MultipleChoiceQuestion;
+export default ShortAnswerQuestion;

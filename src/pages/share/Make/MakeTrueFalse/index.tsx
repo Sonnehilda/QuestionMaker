@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { NavigateFunction } from "react-router-dom";
 
-import Banner from "../../components/Banner";
-import SaForm from "../../components/SaForm";
-import WarningModal from "../../components/WarningModal";
+import Banner from "../../../../components/Banner";
+import TfForm from "../../../../components/share/Form/FormTrueFalse";
+import WarningModal from "../../../../components/share/Modal/WarningModal";
 
-interface SaProps {
+interface TfProps {
   navigate: NavigateFunction;
 }
 
-const ShortAnswerQuestion = ({ navigate }: SaProps) => {
+const TrueFalseQuestion = ({ navigate }: TfProps) => {
   const [warning, setWarning] = useState<string>("");
 
   return (
@@ -18,7 +18,7 @@ const ShortAnswerQuestion = ({ navigate }: SaProps) => {
         <WarningModal warning={warning} setWarning={setWarning} />
       )}
       <Banner />
-      <SaForm
+      <TfForm
         animation="fade-up"
         duration="1000"
         warning={warning}
@@ -29,4 +29,4 @@ const ShortAnswerQuestion = ({ navigate }: SaProps) => {
   );
 };
 
-export default ShortAnswerQuestion;
+export default TrueFalseQuestion;
