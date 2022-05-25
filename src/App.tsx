@@ -9,6 +9,7 @@ import MultipleChoiceQuestion from "./pages/share/Make/MakeMultipleChoice";
 import ShortAnswerQuestion from "./pages/share/Make/MakeShortAnswer";
 import TrueFalseQuestion from "./pages/share/Make/MakeTrueFalse";
 import GlobalStyle from "./styles";
+import SavedQuestion from "./pages/Saved";
 
 const Wrapper = styled.div`
   min-height: 88vh;
@@ -41,6 +42,7 @@ function App() {
             path="/make/fc"
             element={<FlashCardQuestion navigate={navigate} />}
           />
+          <Route path="/review" element={<SavedQuestion />} />
         </Routes>
       </Wrapper>
       <Footer />
