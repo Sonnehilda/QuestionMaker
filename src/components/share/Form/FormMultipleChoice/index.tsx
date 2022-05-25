@@ -207,6 +207,7 @@ const McForm = ({
     } else if (optionRef.current && options.includes(optionRef.current.value)) {
       setWarning(OptionAlreadyExistException);
     }
+    optionRef.current?.focus();
   };
 
   const makeQuestion = () => {
@@ -261,7 +262,7 @@ const McForm = ({
             key={i}
             options={options}
             setOptions={setOptions}
-            index={i + 1}
+            index={i}
             option={p}
             setWarning={setWarning}
           />
