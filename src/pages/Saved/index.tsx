@@ -5,7 +5,7 @@ const SavedQuestion = () => {
   return (
     <>
       <Banner />
-      <List />
+      <List animation="fade-up" duration="1000" />
     </>
   );
 };

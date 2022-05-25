@@ -51,9 +51,15 @@ const QuestionWrapper = styled.div`
 
   border: 0.1vh solid #000;
   border-radius: 0.5vh;
+  cursor: pointer;
+  transition: backdrop-filter 0.25s;
 
   :last-child {
     margin-bottom: 0;
+  }
+
+  :hover {
+    backdrop-filter: brightness(90%);
   }
 `;
 
@@ -62,13 +68,21 @@ const Question = styled.div`
 
   font-size: 2vh;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   :nth-child(2) {
     width: 50vh;
   }
 `;
 
-const List = () => {
+interface ListProps {
+  animation: string;
+  duration: string;
+}
+
+const List = ({ animation, duration }: ListProps) => {
   const [page, setPage] = useState<number>(1);
 
   const Total: string[] = JSON.parse(localStorage.getItem("Total") || "[]");
@@ -87,7 +101,6 @@ const List = () => {
       let question: string[] = JSON.parse(
         localStorage.getItem(Total[index]) || ""
       );
-
       return (
         <>
           <Question>{type}</Question>
@@ -101,27 +114,27 @@ const List = () => {
   };
 
   const renderData = () => {
-    let Data: JSX.Element[] = [];
-
-    for (
-      let i: number = (page - 1) * 5;
-      i < getTotalPage && i < page * 5;
-      i++
-    ) {
-      Data = [...Data, <QuestionWrapper>{loadData(i)}</QuestionWrapper>];
-    }
-
-    return Data;
+    if (getTotalPage > 0) {
+      let Data: JSX.Element[] = [];
+      for (
+        let i: number = (page - 1) * 5;
+        i < getTotalPage && i < page * 5;
+        i++
+      ) {
+        Data = [...Data, <QuestionWrapper>{loadData(i)}</QuestionWrapper>];
+      }
+      return Data;
+    } else return <Question>Question Not Found, Why not make one?</Question>;
   };
 
   return (
-    <Background>
+    <Background data-aos={animation} data-aos-duration={duration}>
       <NameWrapper>
         <Name>Question Type</Name>
         <Name>Question Name</Name>
         <Name>Creation Date</Name>
       </NameWrapper>
-      <>{renderData()}</>
+      {renderData()}
     </Background>
   );
 };
