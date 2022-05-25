@@ -182,8 +182,13 @@ const TfForm = ({
       if (localStorage.getItem("TF")) {
         const TF = JSON.parse(localStorage.getItem("TF") || "");
         localStorage.setItem("TF", JSON.stringify([now, ...TF]));
-      } else localStorage.setItem("TF", JSON.stringify([now]));
-
+      } else {
+        localStorage.setItem("TF", JSON.stringify([now]));
+      }
+      if (localStorage.getItem("Total")) {
+        const Total = JSON.parse(localStorage.getItem("Total") || "");
+        localStorage.setItem("Total", JSON.stringify(["TF" + now, ...Total]));
+      } else localStorage.setItem("Total", JSON.stringify(["TF" + now]));
       alert(
         SucceededMessage[0] +
           `"${titleRef.current.value}"` +

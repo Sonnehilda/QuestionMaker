@@ -7,10 +7,7 @@ import {
   OptionNotExistException,
   OptionNotFulfilledException,
 } from "./constant";
-import {
-  SucceededMessage,
-  TitleNotExistException,
-} from "../genericWarning";
+import { SucceededMessage, TitleNotExistException } from "../genericWarning";
 
 const Background = styled.div`
   padding-top: 3vh;
@@ -226,7 +223,13 @@ const McForm = ({
       if (localStorage.getItem("MC")) {
         const MC = JSON.parse(localStorage.getItem("MC") || "");
         localStorage.setItem("MC", JSON.stringify([now, ...MC]));
-      } else localStorage.setItem("MC", JSON.stringify([now]));
+      } else {
+        localStorage.setItem("MC", JSON.stringify([now]));
+      }
+      if (localStorage.getItem("Total")) {
+        const Total = JSON.parse(localStorage.getItem("Total") || "");
+        localStorage.setItem("Total", JSON.stringify(["MC" + now, ...Total]));
+      } else localStorage.setItem("Total", JSON.stringify(["MC" + now]));
       alert(
         SucceededMessage[0] +
           `"${titleRef.current.value}"` +

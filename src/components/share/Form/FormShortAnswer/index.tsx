@@ -176,8 +176,13 @@ const SaForm = ({
       if (localStorage.getItem("SA")) {
         const SA = JSON.parse(localStorage.getItem("SA") || "");
         localStorage.setItem("SA", JSON.stringify([now, ...SA]));
-      } else localStorage.setItem("SA", JSON.stringify([now]));
-
+      } else {
+        localStorage.setItem("SA", JSON.stringify([now]));
+      }
+      if (localStorage.getItem("Total")) {
+        const Total = JSON.parse(localStorage.getItem("Total") || "");
+        localStorage.setItem("Total", JSON.stringify(["SA" + now, ...Total]));
+      } else localStorage.setItem("Total", JSON.stringify(["SA" + now]));
       alert(
         SucceededMessage[0] +
           `"${titleRef.current.value}"` +

@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link, NavigateFunction } from "react-router-dom";
-import {
-  SucceededMessage,
-} from "../genericWarning";
+import { SucceededMessage } from "../genericWarning";
 import { AnswerNotExistException, TitleNotExistException } from "./constant";
-import { parse } from "path";
 
 const Background = styled.div`
   padding-top: 3vh;
@@ -173,7 +170,13 @@ const FcForm = ({
       if (localStorage.getItem("FC")) {
         const FC = JSON.parse(localStorage.getItem("FC") || "");
         localStorage.setItem("FC", JSON.stringify([now, ...FC]));
-      } else localStorage.setItem("FC", JSON.stringify([now]));
+      } else {
+        localStorage.setItem("FC", JSON.stringify([now]));
+      }
+      if (localStorage.getItem("Total")) {
+        const Total = JSON.parse(localStorage.getItem("Total") || "");
+        localStorage.setItem("Total", JSON.stringify(["FC" + now, ...Total]));
+      } else localStorage.setItem("Total", JSON.stringify(["FC" + now]));
       alert(
         SucceededMessage[0] + `"${faceRef.current.value}"` + SucceededMessage[1]
       );
