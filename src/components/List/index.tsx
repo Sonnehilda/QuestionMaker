@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import moment from "moment";
-import { ReactNode } from "react";
+import { useState } from "react";
 
 const Background = styled.div`
   background-color: #f6f6f6;
@@ -69,6 +69,8 @@ const Question = styled.div`
 `;
 
 const List = () => {
+  const [page, setPage] = useState<number>(1);
+
   const Total: string[] = JSON.parse(localStorage.getItem("Total") || "[]");
   const getTotalPage: number = Total.length;
 
@@ -95,7 +97,21 @@ const List = () => {
       );
     }
 
-    return <Question>question not found</Question>;
+    return <Question>Question Not Found</Question>;
+  };
+
+  const renderData = () => {
+    let Data: JSX.Element[] = [];
+
+    for (
+      let i: number = (page - 1) * 5;
+      i < getTotalPage && i < page * 5;
+      i++
+    ) {
+      Data = [...Data, <QuestionWrapper>{loadData(i)}</QuestionWrapper>];
+    }
+
+    return Data;
   };
 
   return (
@@ -105,7 +121,7 @@ const List = () => {
         <Name>Question Name</Name>
         <Name>Creation Date</Name>
       </NameWrapper>
-      <QuestionWrapper>{loadData(0)}</QuestionWrapper>
+      <>{renderData()}</>
     </Background>
   );
 };
