@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, NavigateFunction } from "react-router-dom";
 import Options from "../../../Option";
 import {
+  AnswerNotExistException,
   OptionAlreadyExistException,
   OptionNotExistException,
   OptionNotFulfilledException,
@@ -216,6 +217,14 @@ const McForm = ({
     } else if (options.length < 2) {
       setWarning(OptionNotFulfilledException);
     } else if (titleRef.current) {
+      const filtered: string[] = options.filter((v) => {
+        return v.includes("@ANSWER");
+      });
+      if (filtered.length <= 0) {
+        setWarning(AnswerNotExistException);
+        return;
+      }
+      
       const now = Date.now();
       localStorage.setItem(
         "MC" + now,
