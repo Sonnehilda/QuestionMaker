@@ -113,9 +113,10 @@ const Question = styled.div`
 interface ListProps {
   animation: string;
   duration: string;
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const List = ({ animation, duration }: ListProps) => {
+const List = ({ animation, duration, setViewState }: ListProps) => {
   const [page, setPage] = useState<number>(1);
 
   const Total: string[] = JSON.parse(localStorage.getItem("Total") || "[]");
@@ -164,11 +165,16 @@ const List = ({ animation, duration }: ListProps) => {
       ) {
         Data = [
           ...Data,
-          <QuestionWrapper key={i}>{loadData(i)}</QuestionWrapper>,
+          <QuestionWrapper
+            onClick={() => setViewState(Total[i])}
+            key={Total[i]}
+          >
+            {loadData(i)}
+          </QuestionWrapper>,
         ];
       }
       return Data;
-    } else return <Question>Question Not Found, Why not make one?</Question>;
+    } else return <Question>Question Not Found</Question>;
   };
 
   return (
