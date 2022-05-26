@@ -9,6 +9,8 @@ const Background = styled.div`
   padding-bottom: 3vh;
   margin-top: 6vh;
 
+  height: 46.5vh;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,6 +22,7 @@ const NameWrapper = styled.div`
   margin-bottom: 1.5vh;
 
   width: 90vh;
+  height: 2.5vh;
 
   display: flex;
   justify-content: center;
@@ -36,6 +39,36 @@ const Name = styled.div`
 
   :nth-child(2) {
     width: 50vh;
+  }
+`;
+
+const Space = styled.div`
+  height: 36.95vh;
+`;
+
+const PageWrapper = styled.div`
+  margin-top: 1.5vh;
+
+  width: 20vh;
+
+  height: 2.5vh;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  font-size: 2vh;
+`;
+
+const Page = styled.div`
+  color: #a1a1a1;
+  font-size: 2vh;
+
+  cursor: pointer;
+  transition: color 0.25s;
+
+  :hover {
+    color: #000;
   }
 `;
 
@@ -59,7 +92,7 @@ const QuestionWrapper = styled.div`
   }
 
   :hover {
-    backdrop-filter: brightness(90%);
+    backdrop-filter: brightness(95%);
   }
 `;
 
@@ -87,6 +120,14 @@ const List = ({ animation, duration }: ListProps) => {
 
   const Total: string[] = JSON.parse(localStorage.getItem("Total") || "[]");
   const getTotalPage: number = Total.length;
+
+  const pageNext = () => {
+    if (page * 5 < getTotalPage) setPage(page + 1);
+  };
+
+  const pagePrev = () => {
+    if (page > 1) setPage(page - 1);
+  };
 
   const loadData = (index: number) => {
     if (Total[index]) {
@@ -121,20 +162,29 @@ const List = ({ animation, duration }: ListProps) => {
         i < getTotalPage && i < page * 5;
         i++
       ) {
-        Data = [...Data, <QuestionWrapper>{loadData(i)}</QuestionWrapper>];
+        Data = [
+          ...Data,
+          <QuestionWrapper key={i}>{loadData(i)}</QuestionWrapper>,
+        ];
       }
       return Data;
     } else return <Question>Question Not Found, Why not make one?</Question>;
   };
 
   return (
-    <Background data-aos={animation} data-aos-duration={duration}>
+    <Background //data-aos={animation} data-aos-duration={duration}
+    >
       <NameWrapper>
         <Name>Question Type</Name>
         <Name>Question Name</Name>
         <Name>Creation Date</Name>
       </NameWrapper>
-      {renderData()}
+      <Space>{renderData()}</Space>
+      <PageWrapper>
+        <Page onClick={() => pagePrev()}>◀</Page>
+        {page}
+        <Page onClick={() => pageNext()}>▶</Page>
+      </PageWrapper>
     </Background>
   );
 };
