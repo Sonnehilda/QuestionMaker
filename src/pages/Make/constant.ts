@@ -19,5 +19,7 @@ export const TrueOrFalseQuestionSubPhrase = [
 ];
 export const FlashcardMainPhrase = "Flashcard";
 export const FlashcardSubPhrase = [
-  "Flashcard is intended to be used as an aid in memorization",
+  "Flashcard is a card bearing information on both sides.",
+  "Each flashcard bears a question on",
+  "one side and an answer on the other.",
 ];
