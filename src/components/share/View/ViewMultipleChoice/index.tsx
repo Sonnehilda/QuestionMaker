@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
@@ -146,10 +146,25 @@ interface McViewProps {
 
 const McView = ({ questionName, setViewState }: McViewProps) => {
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
+  const revealRef = useRef<HTMLButtonElement>(null);
 
   const question: string[] = JSON.parse(
     localStorage.getItem(questionName) || ""
   );
+
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        revealRef.current?.focus();
+      }
+      if (e.key === "Escape") {
+        setViewState("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
 
   return (
     <Background>
@@ -173,7 +188,7 @@ const McView = ({ questionName, setViewState }: McViewProps) => {
           })
         }
       </Wrapper>
-      <Button onClick={() => setIsRevealed(!isRevealed)}>
+      <Button ref={revealRef} onClick={() => setIsRevealed(!isRevealed)}>
         {isRevealed ? "다시 풀기" : "채점"}
       </Button>
     </Background>
