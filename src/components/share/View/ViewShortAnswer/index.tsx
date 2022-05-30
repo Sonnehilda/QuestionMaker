@@ -16,6 +16,10 @@ const Background = styled.div`
 
   width: 90vh;
 
+  @media screen and (max-device-width: 640px) {
+    width: 90vw;
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,7 +54,6 @@ const Leave = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -60,6 +63,10 @@ const Title = styled.div`
   padding-bottom: 0.5vh;
 
   width: 76vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
 
   font-size: 3vh;
   font-weight: 600;

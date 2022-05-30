@@ -10,8 +10,17 @@ const FieldWrapper = styled.div<FieldWrapperProps>`
   width: 76vh;
   min-height: 6vh;
 
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
+
   display: flex;
   ${(props) => props.word.length > 15 && "justify-contents: center;"}
+
+  @media screen and (max-device-width: 640px) {
+    ${(props) => props.word.length > 9 && "justify-contents: center;"}
+  }
+
   align-items: center;
 
   overflow: auto;
