@@ -28,6 +28,7 @@ const MainPhrase = styled.p`
 
   font-size: 4vh;
   font-weight: 600;
+  text-align: center;
 `;
 
 const SubPhrase = styled.p`
@@ -36,6 +37,7 @@ const SubPhrase = styled.p`
 
   font-size: 2vh;
   font-weight: 100;
+  text-align: center;
 
   :last-child {
     margin-bottom: 0;
