@@ -5,6 +5,11 @@ const Background = styled.div`
   margin-bottom: 1.5vh;
 
   width: 76vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
+
   display: flex;
 `;
 
@@ -16,6 +21,10 @@ const Wrapper = styled.div`
 
     width: 38vh;
     height: 6vh;
+
+    @media screen and (max-device-width: 640px) {
+      width: 40vw;
+    }
 
     display: flex;
     justify-content: center;
@@ -34,6 +43,10 @@ const True = styled.input`
 
   width: 38vh;
   height: 6vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 40vw;
+  }
 
   border: 0.1vh solid #000;
   border-right: 0.025vh solid #000;
@@ -56,6 +69,10 @@ const False = styled.input`
 
   width: 38vh;
   height: 6vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 40vw;
+  }
 
   border: 0.1vh solid #000;
   border-left: 0.025vh solid #000;
