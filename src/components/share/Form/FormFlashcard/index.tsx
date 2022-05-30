@@ -194,7 +194,7 @@ const FcForm = ({
       </InputWrapper>
       <InputWrapper>
         <InputName>Card Back</InputName>
-        <Input tabIndex={2} ref={backRef} />
+        <Input tabIndex={2} ref={backRef} maxLength={100} />
       </InputWrapper>
       <Button tabIndex={3} onClick={() => makeQuestion()}>
         Make One!

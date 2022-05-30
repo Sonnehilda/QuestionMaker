@@ -1,7 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Background = styled.div`
+interface BackgroundProps {
+  isRevealed: boolean;
+}
+
+const Background = styled.div<BackgroundProps>`
   position: fixed;
 
   left: 50%;
@@ -9,12 +13,13 @@ const Background = styled.div`
   transform: translate(-50%, -50%);
 
   padding: 3vh;
-  padding-bottom: 6vh;
+  padding-top: 1.5vh;
+  padding-bottom: 7.5vh;
 
   background-color: #fff;
 
   width: 75vh;
-  height: 25vh;
+  height: 30vh;
 
   list-style: none;
   box-sizing: border-box;
@@ -23,17 +28,12 @@ const Background = styled.div`
   border-radius: 0.5vh;
   z-index: 2;
 
-  :hover > div {
-    transform: rotateY(180deg);
-  }
+  ${(props) =>
+    props.isRevealed === true && "> div { transform: rotateY(180deg); }"}
 `;
 
 const Leave = styled.h3`
   all: unset;
-
-  position: absolute;
-
-  margin-left: 1vh;
 
   color: #666;
   font-size: 1.5vh;
@@ -63,8 +63,17 @@ const Card = styled.div`
   justify-content: center;
   align-items: center;
 
-  transition: 0.4s;
+  transition: all 0.4s, color 0.25s;
   transform-style: preserve-3d;
+  cursor: pointer;
+
+  :hover {
+    color: #aaa;
+  }
+
+  h1 {
+    width: 69vh;
+  }
 `;
 
 const Face = styled.div`
@@ -80,16 +89,20 @@ const Face = styled.div`
 `;
 
 const Back = styled.div`
+  background-color: #f6f6f6;
+
   position: absolute;
 
   transform: rotateY(180deg);
 
-  width: 75vh;
+  width: 69vh;
+  height: 20vh;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
+  border-radius: 0.5vh;
   backface-visibility: hidden;
 `;
 
@@ -120,6 +133,8 @@ interface FcViewProps {
 }
 
 const FcView = ({ questionName, setViewState }: FcViewProps) => {
+  const [isRevealed, setIsRevealed] = useState<boolean>(false);
+
   const question: string[] = JSON.parse(
     localStorage.getItem(questionName) || ""
   );
@@ -136,9 +151,9 @@ const FcView = ({ questionName, setViewState }: FcViewProps) => {
   }, []);
 
   return (
-    <Background>
+    <Background isRevealed={isRevealed}>
       <Leave onClick={() => setViewState("")}>← Close</Leave>
-      <Card>
+      <Card onClick={() => setIsRevealed(!isRevealed)}>
         <Face>
           <Title>{question[0]}</Title>
         </Face>
@@ -146,7 +161,7 @@ const FcView = ({ questionName, setViewState }: FcViewProps) => {
           <Title>{question[1]}</Title>
         </Back>
       </Card>
-      <SubTitle>Hover To Check Card Back.</SubTitle>
+      <SubTitle>Click To Check Card {isRevealed ? "Face" : "Back"}.</SubTitle>
     </Background>
   );
 };
