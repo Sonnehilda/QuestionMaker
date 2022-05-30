@@ -224,7 +224,7 @@ const McForm = ({
         setWarning(AnswerNotExistException);
         return;
       }
-      
+
       const now = Date.now();
       localStorage.setItem(
         "MC" + now,
@@ -260,7 +260,7 @@ const McForm = ({
       <InputWrapper>
         <InputName>Add Option</InputName>
         <ButtonWrapper onSubmit={(e) => createOption(e)}>
-          <Input tabIndex={2} ref={optionRef} />
+          <Input tabIndex={2} ref={optionRef} maxLength={50} />
           <AddButton tabIndex={-1}>Add</AddButton>
         </ButtonWrapper>
       </InputWrapper>

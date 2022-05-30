@@ -202,7 +202,7 @@ const SaForm = ({
       </InputWrapper>
       <InputWrapper>
         <InputName>Correct Answer</InputName>
-        <Input tabIndex={2} ref={answerRef} />
+        <Input tabIndex={2} ref={answerRef} maxLength={50} />
       </InputWrapper>
       <Button tabIndex={3} onClick={() => makeQuestion()}>
         Make One!

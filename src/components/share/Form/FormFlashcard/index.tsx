@@ -190,11 +190,11 @@ const FcForm = ({
       <Leave to="/make">← Go back</Leave>
       <InputWrapper>
         <InputName>Card Face</InputName>
-        <Input tabIndex={1} ref={faceRef} maxLength={100} />
+        <Input tabIndex={1} ref={faceRef} maxLength={50} />
       </InputWrapper>
       <InputWrapper>
         <InputName>Card Back</InputName>
-        <Input tabIndex={2} ref={backRef} maxLength={100} />
+        <Input tabIndex={2} ref={backRef} maxLength={50} />
       </InputWrapper>
       <Button tabIndex={3} onClick={() => makeQuestion()}>
         Make One!
