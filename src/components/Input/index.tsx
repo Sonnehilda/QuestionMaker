@@ -2,15 +2,19 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import stringSimilarity from "string-similarity";
 
-const FieldWrapper = styled.div`
-  padding-top: 1.5vh;
-  padding-bottom: 1.5vh;
+interface FieldWrapperProps {
+  word: string;
+}
 
-  height: 6vh;
+const FieldWrapper = styled.div<FieldWrapperProps>`
+  width: 76vh;
+  min-height: 6vh;
 
   display: flex;
-  justify-content: center;
+  ${(props) => props.word.length > 15 && "justify-contents: center;"}
   align-items: center;
+
+  overflow: auto;
 `;
 
 interface FieldProps {
@@ -22,6 +26,7 @@ const Field = styled.input<FieldProps>`
 
   margin-left: 0.5vh;
   margin-right: 0.5vh;
+  margin-bottom: 1vh;
 
   width: 4vh;
   height: 4vh;
@@ -121,7 +126,7 @@ const Input = ({ word, status, setStatus }: InputProps) => {
 
   return (
     <>
-      <FieldWrapper>
+      <FieldWrapper word={word}>
         {word.split("").map((i, index) => {
           return (
             <Field
