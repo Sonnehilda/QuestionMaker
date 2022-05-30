@@ -15,15 +15,14 @@ const FieldWrapper = styled.div<FieldWrapperProps>`
   }
 
   display: flex;
-  ${(props) => props.word.length > 15 && "justify-contents: center;"}
-
-  @media screen and (max-device-width: 640px) {
-    ${(props) => props.word.length > 9 && "justify-contents: center;"}
-  }
-
+  ${(props) =>
+    props.word.length > 15 ? "overflow: auto;" : "justify-content: center;"}
   align-items: center;
 
-  overflow: auto;
+  @media screen and (max-device-width: 640px) {
+    ${(props) =>
+      props.word.length > 9 ? "overflow: auto;" : "justify-content: center;"}
+  }
 `;
 
 interface FieldProps {

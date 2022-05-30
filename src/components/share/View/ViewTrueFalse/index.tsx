@@ -31,8 +31,15 @@ const Background = styled.div`
   z-index: 2;
 `;
 
-const Leave = styled.div`
-  margin-right: 70.5vh;
+const LeaveWrapper = styled.div`
+  width: 76vh;
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
+`;
+
+const Leave = styled.h3`
+  all: unset;
 
   color: #666;
   font-size: 1.5vh;
@@ -40,6 +47,7 @@ const Leave = styled.div`
 
   cursor: pointer;
   transition: filter 0.25s;
+  z-index: 3;
 
   :link {
     color: #666;
@@ -119,7 +127,9 @@ const TfView = ({ questionName, setViewState }: TfViewProps) => {
 
   return (
     <Background>
-      <Leave onClick={() => setViewState("")}>← Close</Leave>
+      <LeaveWrapper>
+        <Leave onClick={() => setViewState("")}>← Close</Leave>
+      </LeaveWrapper>
       <Wrapper>
         <Title>{question[0]}</Title>
       </Wrapper>
