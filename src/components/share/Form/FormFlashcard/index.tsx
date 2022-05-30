@@ -19,8 +19,15 @@ const Background = styled.div`
   align-items: center;
 `;
 
+const LeaveWrapper = styled.div`
+  width: 76vh;
+  @media screen and (max-device-width: 640px) {
+    width: 90vw;
+  }
+`;
+
 const Leave = styled(Link)`
-  margin-right: 69vh;
+  all: unset;
 
   color: #666;
   font-size: 1.5vh;
@@ -28,6 +35,7 @@ const Leave = styled(Link)`
 
   cursor: pointer;
   transition: filter 0.25s;
+  z-index: 3;
 
   :link {
     color: #666;
@@ -54,6 +62,10 @@ const InputName = styled.div`
 
   width: 76vh;
 
+  @media screen and (max-device-width: 640px) {
+    width: 90vw;
+  }
+
   font-size: 3vh;
   font-weight: 600;
   text-align: center;
@@ -71,6 +83,10 @@ const Input = styled.input`
 
   width: 70vh;
   height: 6vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
 
   font-size: 2vh;
   text-align: center;
@@ -97,6 +113,10 @@ const Button = styled.button`
 
   width: 76vh;
   height: 6vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 90vw;
+  }
 
   font-size: 2vh;
   text-align: center;
@@ -186,8 +206,11 @@ const FcForm = ({
   };
 
   return (
-    <Background data-aos={animation} data-aos-duration={duration}>
-      <Leave to="/make">← Go back</Leave>
+    <Background //data-aos={animation} data-aos-duration={duration}
+    >
+      <LeaveWrapper>
+        <Leave to="/make">← Go back</Leave>
+      </LeaveWrapper>
       <InputWrapper>
         <InputName>Card Face</InputName>
         <Input tabIndex={1} ref={faceRef} maxLength={50} />
