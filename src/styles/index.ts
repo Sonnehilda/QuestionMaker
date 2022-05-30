@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
     #root {
         height: max-content;
+
+        overflow-x: hidden;
     }
 
     html, body {
