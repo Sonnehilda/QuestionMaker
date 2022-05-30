@@ -15,6 +15,10 @@ const Background = styled.div`
 
   width: 90vh;
 
+  @media screen and (max-device-width: 640px) {
+    width: 90vw;
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,6 +64,10 @@ const Title = styled.div`
 
   width: 76vh;
 
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
+
   font-size: 3vh;
   font-weight: 600;
   text-align: center;
@@ -80,6 +88,10 @@ const Option = styled.input<OptionProps>`
   margin-top: 1.5vh;
 
   width: 76vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
 
   display: flex;
   justify-content: center;
@@ -124,6 +136,10 @@ const Button = styled.button`
   padding-bottom: 1.5vh;
 
   width: 76vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
 
   font-size: 2vh;
   text-align: center;
@@ -179,6 +195,7 @@ const McView = ({ questionName, setViewState }: McViewProps) => {
             if (i > 0)
               return (
                 <Option
+                  key={i}
                   type="checkbox"
                   disabled={isRevealed}
                   isRevealed={isRevealed}
@@ -189,7 +206,7 @@ const McView = ({ questionName, setViewState }: McViewProps) => {
         }
       </Wrapper>
       <Button ref={revealRef} onClick={() => setIsRevealed(!isRevealed)}>
-        {isRevealed ? "다시 풀기" : "채점"}
+        {isRevealed ? "Hide Answer" : "Reveal Answer"}
       </Button>
     </Background>
   );
