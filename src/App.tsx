@@ -10,6 +10,7 @@ import ShortAnswerQuestion from "./pages/share/Make/MakeShortAnswer";
 import TrueFalseQuestion from "./pages/share/Make/MakeTrueFalse";
 import GlobalStyle from "./styles";
 import SavedQuestion from "./pages/Saved";
+import About from "./pages/About";
 
 const Wrapper = styled.div`
   min-height: 88vh;
@@ -43,6 +44,7 @@ function App() {
             element={<FlashCardQuestion navigate={navigate} />}
           />
           <Route path="/review" element={<SavedQuestion />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Wrapper>
       <Footer />
