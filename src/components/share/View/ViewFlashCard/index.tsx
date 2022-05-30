@@ -19,7 +19,12 @@ const Background = styled.div<BackgroundProps>`
   background-color: #fff;
 
   width: 75vh;
-  height: 30vh;
+  height: 40vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 90vw;
+    height: 50vh;
+  }
 
   list-style: none;
   box-sizing: border-box;
@@ -56,7 +61,7 @@ const Leave = styled.h3`
 `;
 
 const Card = styled.div`
-  width: 69vh;
+  width: 100%;
   height: 100%;
 
   display: flex;
@@ -79,7 +84,12 @@ const Card = styled.div`
 const Face = styled.div`
   position: absolute;
 
-  width: 75vh;
+  width: 100%;
+  height: 30vh;
+
+  @media screen and (max-device-width: 640px) {
+    height: 40vh;
+  }
 
   display: flex;
   justify-content: center;
@@ -89,14 +99,16 @@ const Face = styled.div`
 `;
 
 const Back = styled.div`
-  background-color: #f6f6f6;
-
   position: absolute;
 
   transform: rotateY(180deg);
 
-  width: 69vh;
-  height: 20vh;
+  width: 100%;
+  height: 30vh;
+
+  @media screen and (max-device-width: 640px) {
+    height: 40vh;
+  }
 
   display: flex;
   justify-content: center;
@@ -117,7 +129,7 @@ const Title = styled.h1`
 const SubTitle = styled.h3`
   all: unset;
 
-  width: 69vh;
+  width: 100%;
 
   display: flex;
   justify-content: center;
