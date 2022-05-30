@@ -18,6 +18,10 @@ const Title = styled(Link)`
   font-size: 3vh;
   font-weight: 100;
 
+  @media screen and (max-device-width: 640px) {
+    font-size: 2.5vh;
+  }
+
   cursor: pointer;
   transition: filter 0.25s;
 
@@ -48,6 +52,11 @@ const Contents = styled(Link)`
   font-size: 2vh;
   font-weight: 100;
 
+  @media screen and (max-device-width: 640px) {
+    margin-left: 0.75vh;
+    margin-right: 0.75vh;
+  }
+
   cursor: pointer;
   transition: filter 0.25s;
 
@@ -64,6 +73,12 @@ const Contents = styled(Link)`
 
   :nth-child(2) {
     margin-left: 5vh;
+  }
+
+  @media screen and (max-device-width: 640px) {
+    :nth-child(2) {
+      margin-left: 2vh;
+    }
   }
 
   :nth-child(2n) {
