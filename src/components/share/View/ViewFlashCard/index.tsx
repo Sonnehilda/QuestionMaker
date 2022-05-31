@@ -160,6 +160,7 @@ const FcView = ({ questionName, setViewState }: FcViewProps) => {
 
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

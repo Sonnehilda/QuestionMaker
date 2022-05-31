@@ -102,6 +102,7 @@ const Switch = ({ trueRef, falseRef, answer, setAnswer }: SwitchProps) => {
       trueRef.current.checked = answer;
       falseRef.current.checked = !answer;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answer]);
 
   return (

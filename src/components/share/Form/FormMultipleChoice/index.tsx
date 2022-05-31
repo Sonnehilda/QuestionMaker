@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, NavigateFunction } from "react-router-dom";
 import Options from "../../../Option";
@@ -221,6 +221,7 @@ const McForm = ({
 
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const createOption = (e: React.FormEvent<HTMLFormElement>) => {
@@ -281,8 +282,7 @@ const McForm = ({
   };
 
   return (
-    <Background //data-aos={animation} data-aos-duration={duration}
-    >
+    <Background data-aos={animation} data-aos-duration={duration}>
       <LeaveWrapper>
         <Leave to="/make">← Go back</Leave>
       </LeaveWrapper>

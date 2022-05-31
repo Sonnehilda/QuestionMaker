@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
@@ -188,6 +188,7 @@ const McView = ({ questionName, setViewState }: McViewProps) => {
 
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -5,7 +5,7 @@ export const WhatIsQuestionMakerSubPhrase = [
   "You can study yourself by going over the questions you've manufactured!",
 ];
 
-export const HowToUseMainPhrase = "How to use?";
+export const HowToUseMainPhrase = "How to Use?";
 export const HowToUseSubPhrase = [
   'By clicking the "Make Questions" tab in the header,',
   "you can start manufacturing various questions.",

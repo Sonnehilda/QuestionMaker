@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Input from "../../../Input";
 import Switch from "../../../Switch";
 
 const Background = styled.div`
@@ -123,6 +122,7 @@ const TfView = ({ questionName, setViewState }: TfViewProps) => {
 
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -236,8 +236,7 @@ const List = ({ animation, duration, setViewState }: ListProps) => {
   };
 
   return (
-    <Background //data-aos={animation} data-aos-duration={duration}
-    >
+    <Background data-aos={animation} data-aos-duration={duration}>
       <NameWrapper>
         <Name>Question Type</Name>
         <Name>Question Name</Name>

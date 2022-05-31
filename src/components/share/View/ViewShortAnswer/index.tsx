@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../../../Input";
 
@@ -104,6 +104,7 @@ const SaView = ({ questionName, setViewState }: SaViewProps) => {
 
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
