@@ -15,6 +15,8 @@ const Background = styled.header`
 const Title = styled(Link)`
   all: unset;
 
+  margin-bottom: 0.4vh;
+
   font-size: 3vh;
   font-weight: 100;
 
@@ -47,6 +49,7 @@ const Contents = styled(Link)`
 
   margin-left: 2.5vh;
   margin-right: 2.5vh;
+  margin-bottom: 0.175vh;
 
   color: #666;
   font-size: 2vh;
