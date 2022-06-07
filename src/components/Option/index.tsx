@@ -129,6 +129,7 @@ const Options = ({
   useEffect(() => {
     if (option.includes("@ANSWER")) setIsAnswer(true);
     else setIsAnswer(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   return (

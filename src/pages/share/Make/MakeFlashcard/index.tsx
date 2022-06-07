@@ -20,7 +20,7 @@ const FlashCardQuestion = ({ navigate }: FcProps) => {
       <Banner />
       <FcForm
         animation="fade-up"
-        duration="1000"
+        duration="750"
         warning={warning}
         setWarning={setWarning}
         navigate={navigate}

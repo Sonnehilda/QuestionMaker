@@ -19,7 +19,7 @@ const About = () => {
       />
       <Phrase
         animation="fade-left"
-        duration="1000"
+        duration="1500"
         mainphrase={ContactMainPhrase}
         subphrase={ContactSubPhrase}
       />

@@ -20,7 +20,7 @@ const TrueFalseQuestion = ({ navigate }: TfProps) => {
       <Banner />
       <TfForm
         animation="fade-up"
-        duration="1000"
+        duration="750"
         warning={warning}
         setWarning={setWarning}
         navigate={navigate}
