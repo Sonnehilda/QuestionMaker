@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import moment from "moment";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Background = styled.div`
   background-color: #f6f6f6;
@@ -9,10 +9,10 @@ const Background = styled.div`
   padding-bottom: 3vh;
   margin-top: 6vh;
 
-  height: 46.5vh;
+  height: 52vh;
 
   @media screen and (max-device-width: 640px) {
-    height: 47.5vh;
+    height: 52.5vh;
   }
 
   display: flex;
@@ -61,10 +61,10 @@ const Name = styled.div`
 `;
 
 const Space = styled.div`
-  height: 36.95vh;
+  height: 37vh;
 
   @media screen and (max-device-width: 640px) {
-    height: 35vh;
+    height: 34.5vh;
   }
 `;
 
@@ -168,6 +168,27 @@ const Question = styled.div<QuestionProps>`
   }
 `;
 
+const InputWrapper = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  all: unset;
+
+  margin-top: 1.5vh;
+  padding-bottom: 0.5vh;
+
+  width: 25vh;
+  height: 3vh;
+
+  font-size: 2vh;
+  text-align: center;
+
+  border-bottom: 0.1vh solid #000;
+`;
+
 interface ListProps {
   animation: string;
   duration: string;
@@ -176,6 +197,9 @@ interface ListProps {
 
 const List = ({ animation, duration, setViewState }: ListProps) => {
   const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const Total: string[] = JSON.parse(localStorage.getItem("Total") || "[]");
   const getTotalPage: number = Total.length;
@@ -188,44 +212,77 @@ const List = ({ animation, duration, setViewState }: ListProps) => {
     if (page > 1) setPage(page - 1);
   };
 
+  const searchData = (search: string) => {
+    const searchedData: string[] = [];
+    // eslint-disable-next-line array-callback-return
+    Total.map((v) => {
+      if (
+        JSON.parse(localStorage.getItem(v) || "[]")[0]
+          .toLowerCase()
+          .includes(search.toLowerCase())
+      )
+        searchedData.push(v);
+    });
+    return searchedData;
+  };
+
   const loadData = (index: number) => {
-    if (Total[index]) {
-      let type: string = Total[index].includes("MC")
+    let type: string;
+    let date: string | number;
+    let question: string[];
+
+    if (search === "") {
+      type = Total[index].includes("MC")
         ? "Multiple Choice"
         : Total[index].includes("SA")
         ? "Short Answer"
         : Total[index].includes("TF")
         ? "True or False"
         : "Flashcard";
-      let date: string | number = parseInt(Total[index].slice(2));
-      let question: string[] = JSON.parse(
-        localStorage.getItem(Total[index]) || ""
-      );
-      return (
-        <>
-          <Question type={type}></Question>
-          <Question>{question[0]}</Question>
-          <Question>{moment(date).format("MM-DD-YYYY")}</Question>
-        </>
-      );
+      date = parseInt(Total[index].slice(2));
+      question = JSON.parse(localStorage.getItem(Total[index]) || "");
+    } else {
+      const searchedData: string[] = searchData(search);
+      type = searchedData[index].includes("MC")
+        ? "Multiple Choice"
+        : searchedData[index].includes("SA")
+        ? "Short Answer"
+        : searchedData[index].includes("TF")
+        ? "True or False"
+        : "Flashcard";
+      date = parseInt(searchedData[index].slice(2));
+      question = JSON.parse(localStorage.getItem(searchedData[index]) || "");
     }
 
-    return <Question>Question Not Found</Question>;
+    return (
+      <>
+        <Question type={type}></Question>
+        <Question>{question[0]}</Question>
+        <Question>{moment(date).format("MM-DD-YYYY")}</Question>
+      </>
+    );
   };
 
   const renderData = () => {
-    if (getTotalPage > 0) {
+    let totalPage: number;
+    let questions: string[];
+
+    if (search === "") {
+      questions = Total;
+      totalPage = getTotalPage;
+    } else {
+      questions = searchData(search);
+      totalPage = questions.length;
+    }
+
+    if (totalPage > 0) {
       let Data: JSX.Element[] = [];
-      for (
-        let i: number = (page - 1) * 5;
-        i < getTotalPage && i < page * 5;
-        i++
-      ) {
+      for (let i: number = (page - 1) * 5; i < totalPage && i < page * 5; i++) {
         Data = [
           ...Data,
           <QuestionWrapper
-            onClick={() => setViewState(Total[i])}
-            key={Total[i]}
+            onClick={() => setViewState(questions[i])}
+            key={questions[i]}
           >
             {loadData(i)}
           </QuestionWrapper>,
@@ -248,6 +305,14 @@ const List = ({ animation, duration, setViewState }: ListProps) => {
         {page}
         <Page onClick={() => pageNext()}>▶</Page>
       </PageWrapper>
+      <InputWrapper
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+          if (inputRef.current) setSearch(inputRef.current.value);
+        }}
+      >
+        <Input placeholder="Search Question Name" ref={inputRef} />
+      </InputWrapper>
     </Background>
   );
 };
