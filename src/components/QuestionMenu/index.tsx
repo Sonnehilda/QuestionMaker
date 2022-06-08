@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { mc, sa, tf, fc } from "../../assets/images";
-import Mobile from "./Mobile";
+import QuestionMenuMobile from "./Mobile";
 
 const Background = styled.div`
   background-color: #f6f6f6;
@@ -110,12 +110,12 @@ interface MenuProps {
   duration: string;
 }
 
-const Menu = ({ animation, duration }: MenuProps) => {
+const QuestionMenu = ({ animation, duration }: MenuProps) => {
   return (
     <>
-      <Mobile />
+      <QuestionMenuMobile />
       <Background data-aos={animation} data-aos-duration={duration}>
-        <MenuTitle>Choose Question's Type</MenuTitle>
+        <MenuTitle>Choose Question Type</MenuTitle>
         <CardWrapper>
           <Card to="/make/mc" image={mc}>
             <Title>Multiple Choice Question</Title>
@@ -135,4 +135,4 @@ const Menu = ({ animation, duration }: MenuProps) => {
   );
 };
 
-export default Menu;
+export default QuestionMenu;

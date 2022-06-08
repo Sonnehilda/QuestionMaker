@@ -67,10 +67,10 @@ const Title = styled.div`
   text-align: center;
 `;
 
-const Mobile = () => {
+const QuestionMenuMobile = () => {
   return (
     <Background>
-      <MenuTitle>Choose Question's Type</MenuTitle>
+      <MenuTitle>Choose Question Type</MenuTitle>
       <CardWrapper>
         <Card to="/make/mc">
           <Title>Multiple Choice Question</Title>
@@ -89,4 +89,4 @@ const Mobile = () => {
   );
 };
 
-export default Mobile;
+export default QuestionMenuMobile;
