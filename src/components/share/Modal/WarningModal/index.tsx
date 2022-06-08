@@ -22,7 +22,7 @@ const Background = styled.div`
 `;
 
 const Close = styled.div`
-  position: fixed;
+  position: absolute;
 
   margin-left: 27vh;
   margin-bottom: 17.5vh;
