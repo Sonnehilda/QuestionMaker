@@ -311,7 +311,7 @@ const List = ({ animation, duration, setViewState }: ListProps) => {
           if (inputRef.current) setSearch(inputRef.current.value);
         }}
       >
-        <Input placeholder="Search Question Name" ref={inputRef} />
+        <Input placeholder="Search Question By Name" ref={inputRef} />
       </InputWrapper>
     </Background>
   );
