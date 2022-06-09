@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { CodeNotExistException } from "./constant";
+import { CodeNotExistException, CodeNotValidException } from "./constant";
 
 const Background = styled.div`
   position: fixed;
@@ -148,10 +148,16 @@ const ImportModal = ({ setViewState }: ImportModalProps) => {
       if (inputRef.current.value === "") {
         alert(CodeNotExistException);
       } else {
+        try {
+          JSON.parse(inputRef.current.value);
+        } catch {
+          alert(CodeNotValidException);
+          return;
+        }
+
         localStorage.clear();
 
-        const targetStorage: string[] = JSON.parse(inputRef.current.value);
-
+        let targetStorage: string[] = JSON.parse(inputRef.current.value);
         const totalStorage: string[] = [];
         const mcStorage: string[] = [];
         const saStorage: string[] = [];
@@ -172,7 +178,6 @@ const ImportModal = ({ setViewState }: ImportModalProps) => {
             id = v;
           }
         });
-
         localStorage.setItem("Total", JSON.stringify(totalStorage));
         localStorage.setItem("MC", JSON.stringify(mcStorage));
         localStorage.setItem("SA", JSON.stringify(saStorage));
