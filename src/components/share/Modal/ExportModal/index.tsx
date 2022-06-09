@@ -115,6 +115,9 @@ const ExportModal = ({ setViewState }: ExportModalProps) => {
   );
 
   const exportStorage = () => {
+    if (!localStorage.getItem("Total")) {
+      return;
+    }
     const Total: string[] = JSON.parse(localStorage.getItem("Total") || "");
     const exportedStorage: string[] = [];
     // eslint-disable-next-line array-callback-return
@@ -128,8 +131,12 @@ const ExportModal = ({ setViewState }: ExportModalProps) => {
 
   const copyExportedStorage = () => {
     if (inputRef.current) {
-      navigator.clipboard.writeText(inputRef.current.value);
-      setStatus("Copied To Clipboard!");
+      if (inputRef.current.value !== "") {
+        navigator.clipboard.writeText(inputRef.current.value);
+        setStatus("Copied To Clipboard!");
+      } else {
+        setStatus("Copy Failed!");
+      }
     }
   };
 
