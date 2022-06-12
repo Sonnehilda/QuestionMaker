@@ -79,6 +79,7 @@ const Title = styled.div`
   font-size: 3vh;
   font-weight: 600;
   text-align: center;
+  word-break: break-all;
 
   border-bottom: 0.1vh solid #aaa;
 `;

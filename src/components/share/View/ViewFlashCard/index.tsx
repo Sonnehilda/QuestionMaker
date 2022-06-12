@@ -124,6 +124,7 @@ const Title = styled.h1`
   font-size: 3vh;
   font-weight: 600;
   text-align: center;
+  word-break: break-all;
 `;
 
 const SubTitle = styled.h3`
