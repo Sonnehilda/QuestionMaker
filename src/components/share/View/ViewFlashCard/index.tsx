@@ -37,10 +37,43 @@ const Background = styled.div<BackgroundProps>`
     props.isRevealed === true && "> div { transform: rotateY(180deg); }"}
 `;
 
+const SubWrapper = styled.span`
+  width: 69vh;
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
+
+  display: inline-flex;
+  justify-content: space-between;
+`;
+
 const Leave = styled.h3`
   all: unset;
 
   color: #666;
+  font-size: 1.5vh;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: filter 0.25s;
+  z-index: 3;
+
+  :link {
+    color: #666;
+  }
+  :visited {
+    color: #666;
+  }
+
+  :hover {
+    filter: brightness(150%);
+  }
+`;
+
+const Delete = styled.h3`
+  all: unset;
+
+  color: #f66;
   font-size: 1.5vh;
   text-decoration: none;
 
@@ -152,6 +185,22 @@ const FcView = ({ questionName, setViewState }: FcViewProps) => {
     localStorage.getItem(questionName) || ""
   );
 
+  const deleteQuestion = () => {
+    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTotal = total.filter((v) => {
+      return v !== questionName;
+    });
+    const fc: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredFC = fc.filter((v) => {
+      return v !== questionName;
+    });
+    localStorage.setItem("Total", JSON.stringify(filteredTotal));
+    localStorage.setItem("FC", JSON.stringify(filteredFC));
+    localStorage.removeItem(questionName);
+
+    setViewState("");
+  };
+
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -166,7 +215,10 @@ const FcView = ({ questionName, setViewState }: FcViewProps) => {
 
   return (
     <Background isRevealed={isRevealed}>
-      <Leave onClick={() => setViewState("")}>← Close</Leave>
+      <SubWrapper>
+        <Leave onClick={() => setViewState("")}>← Close</Leave>
+        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
+      </SubWrapper>
       <Card onClick={() => setIsRevealed(!isRevealed)}>
         <Face>
           <Title>{question[0]}</Title>
