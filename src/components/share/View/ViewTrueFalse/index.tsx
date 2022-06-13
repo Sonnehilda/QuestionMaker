@@ -30,17 +30,43 @@ const Background = styled.div`
   z-index: 2;
 `;
 
-const LeaveWrapper = styled.div`
+const SubWrapper = styled.div`
   width: 76vh;
   @media screen and (max-device-width: 640px) {
     width: 80vw;
   }
+
+  display: inline-flex;
+  justify-content: space-between;
 `;
 
 const Leave = styled.h3`
   all: unset;
 
   color: #666;
+  font-size: 1.5vh;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: filter 0.25s;
+  z-index: 3;
+
+  :link {
+    color: #666;
+  }
+  :visited {
+    color: #666;
+  }
+
+  :hover {
+    filter: brightness(150%);
+  }
+`;
+
+const Delete = styled.h3`
+  all: unset;
+
+  color: #f66;
   font-size: 1.5vh;
   text-decoration: none;
 
@@ -114,6 +140,22 @@ const TfView = ({ questionName, setViewState }: TfViewProps) => {
     localStorage.getItem(questionName) || ""
   );
 
+  const deleteQuestion = () => {
+    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTotal = total.filter((v) => {
+      return v !== questionName;
+    });
+    const tf: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTF = tf.filter((v) => {
+      return v !== questionName;
+    });
+    localStorage.setItem("Total", JSON.stringify(filteredTotal));
+    localStorage.setItem("TF", JSON.stringify(filteredTF));
+    localStorage.removeItem(questionName);
+
+    setViewState("");
+  };
+
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -128,9 +170,10 @@ const TfView = ({ questionName, setViewState }: TfViewProps) => {
 
   return (
     <Background>
-      <LeaveWrapper>
+      <SubWrapper>
         <Leave onClick={() => setViewState("")}>← Close</Leave>
-      </LeaveWrapper>
+        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
+      </SubWrapper>
       <Wrapper>
         <Title>{question[0]}</Title>
       </Wrapper>
