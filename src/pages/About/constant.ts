@@ -1,5 +1,5 @@
 export const WhyMakingQuestionMakerMainPhrase =
-  "Why Did You Made Question Maker?";
+  "Why Did You Make Question Maker?";
 export const WhyMakingQuestionMakerSubPhrase = [
   "One of my friends told me that he tried to",
   "make a question for self-study on the internet.",
