@@ -3,6 +3,36 @@ import { Link } from "react-router-dom";
 import { mc, sa, tf, fc } from "../../assets/images";
 import QuestionMenuMobile from "./Mobile";
 
+interface MenuProps {
+  animation: string;
+  duration: string;
+}
+
+const QuestionMenu = ({ animation, duration }: MenuProps) => {
+  return (
+    <>
+      <QuestionMenuMobile />
+      <Background data-aos={animation} data-aos-duration={duration}>
+        <MenuTitle>Choose Question Type</MenuTitle>
+        <CardWrapper>
+          <Card to="/make/mc" image={mc}>
+            <Title>Multiple Choice Question</Title>
+          </Card>
+          <Card to="/make/sa" image={sa}>
+            <Title>Short Answer Question</Title>
+          </Card>
+          <Card to="/make/tf" image={tf}>
+            <Title>True or False Question</Title>
+          </Card>
+          <Card to="/make/fc" image={fc}>
+            <Title>Flash Card</Title>
+          </Card>
+        </CardWrapper>
+      </Background>
+    </>
+  );
+};
+
 const Background = styled.div`
   background-color: #f6f6f6;
 
@@ -104,35 +134,5 @@ const Title = styled.div`
 
   filter: drop-shadow(0 0 0.5vh #000);
 `;
-
-interface MenuProps {
-  animation: string;
-  duration: string;
-}
-
-const QuestionMenu = ({ animation, duration }: MenuProps) => {
-  return (
-    <>
-      <QuestionMenuMobile />
-      <Background data-aos={animation} data-aos-duration={duration}>
-        <MenuTitle>Choose Question Type</MenuTitle>
-        <CardWrapper>
-          <Card to="/make/mc" image={mc}>
-            <Title>Multiple Choice Question</Title>
-          </Card>
-          <Card to="/make/sa" image={sa}>
-            <Title>Short Answer Question</Title>
-          </Card>
-          <Card to="/make/tf" image={tf}>
-            <Title>True or False Question</Title>
-          </Card>
-          <Card to="/make/fc" image={fc}>
-            <Title>Flash Card</Title>
-          </Card>
-        </CardWrapper>
-      </Background>
-    </>
-  );
-};
 
 export default QuestionMenu;

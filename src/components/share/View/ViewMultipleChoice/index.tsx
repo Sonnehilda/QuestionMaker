@@ -1,6 +1,83 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
+interface McViewProps {
+  questionName: string;
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const McView = ({ questionName, setViewState }: McViewProps) => {
+  const [isRevealed, setIsRevealed] = useState<boolean>(false);
+  const revealRef = useRef<HTMLButtonElement>(null);
+
+  const question: string[] = JSON.parse(
+    localStorage.getItem(questionName) || ""
+  );
+
+  const deleteQuestion = () => {
+    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTotal = total.filter((v) => {
+      return v !== questionName;
+    });
+    const mc: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredMC = mc.filter((v) => {
+      return v !== questionName;
+    });
+    localStorage.setItem("Total", JSON.stringify(filteredTotal));
+    localStorage.setItem("MC", JSON.stringify(filteredMC));
+    localStorage.removeItem(questionName);
+
+    setViewState("");
+  };
+
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        revealRef.current?.focus();
+      }
+      if (e.key === "Escape") {
+        setViewState("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Background>
+      <SubWrapper>
+        <Leave onClick={() => setViewState("")}>← Close</Leave>
+        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
+      </SubWrapper>
+      <Wrapper>
+        <Title>{question[0]}</Title>
+      </Wrapper>
+      <Wrapper>
+        {
+          // eslint-disable-next-line array-callback-return
+          question.map((v, i) => {
+            if (i > 0)
+              return (
+                <Option
+                  key={i}
+                  type="checkbox"
+                  disabled={isRevealed}
+                  isRevealed={isRevealed}
+                  contents={v}
+                />
+              );
+          })
+        }
+      </Wrapper>
+      <Button ref={revealRef} onClick={() => setIsRevealed(!isRevealed)}>
+        {isRevealed ? "Hide Answer" : "Reveal Answer"}
+      </Button>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   position: fixed;
 
@@ -189,82 +266,5 @@ const Button = styled.button`
     filter: drop-shadow(0 0 0.25vh #c3c3c3);
   }
 `;
-
-interface McViewProps {
-  questionName: string;
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const McView = ({ questionName, setViewState }: McViewProps) => {
-  const [isRevealed, setIsRevealed] = useState<boolean>(false);
-  const revealRef = useRef<HTMLButtonElement>(null);
-
-  const question: string[] = JSON.parse(
-    localStorage.getItem(questionName) || ""
-  );
-
-  const deleteQuestion = () => {
-    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const filteredTotal = total.filter((v) => {
-      return v !== questionName;
-    });
-    const mc: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const filteredMC = mc.filter((v) => {
-      return v !== questionName;
-    });
-    localStorage.setItem("Total", JSON.stringify(filteredTotal));
-    localStorage.setItem("MC", JSON.stringify(filteredMC));
-    localStorage.removeItem(questionName);
-
-    setViewState("");
-  };
-
-  useEffect(() => {
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        revealRef.current?.focus();
-      }
-      if (e.key === "Escape") {
-        setViewState("");
-      }
-    };
-
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <Background>
-      <SubWrapper>
-        <Leave onClick={() => setViewState("")}>← Close</Leave>
-        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
-      </SubWrapper>
-      <Wrapper>
-        <Title>{question[0]}</Title>
-      </Wrapper>
-      <Wrapper>
-        {
-          // eslint-disable-next-line array-callback-return
-          question.map((v, i) => {
-            if (i > 0)
-              return (
-                <Option
-                  key={i}
-                  type="checkbox"
-                  disabled={isRevealed}
-                  isRevealed={isRevealed}
-                  contents={v}
-                />
-              );
-          })
-        }
-      </Wrapper>
-      <Button ref={revealRef} onClick={() => setIsRevealed(!isRevealed)}>
-        {isRevealed ? "Hide Answer" : "Reveal Answer"}
-      </Button>
-    </Background>
-  );
-};
 
 export default McView;

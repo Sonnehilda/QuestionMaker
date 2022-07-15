@@ -1,6 +1,46 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 
+interface SwitchProps {
+  trueRef: React.RefObject<HTMLInputElement>;
+  falseRef: React.RefObject<HTMLInputElement>;
+  answer: boolean | undefined;
+  setAnswer: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+}
+
+const Switch = ({ trueRef, falseRef, answer, setAnswer }: SwitchProps) => {
+  useEffect(() => {
+    if (trueRef.current && falseRef.current && answer !== undefined) {
+      trueRef.current.checked = answer;
+      falseRef.current.checked = !answer;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answer]);
+
+  return (
+    <Background>
+      <Wrapper>
+        <label htmlFor="true">True</label>
+        <True
+          id="true"
+          onChange={() => setAnswer(true)}
+          ref={trueRef}
+          type="checkbox"
+        />
+      </Wrapper>
+      <Wrapper>
+        <label htmlFor="false">False</label>
+        <False
+          id="false"
+          onChange={() => setAnswer(false)}
+          ref={falseRef}
+          type="checkbox"
+        />
+      </Wrapper>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   margin-bottom: 1.5vh;
 
@@ -62,6 +102,7 @@ const True = styled.input`
     box-shadow: 0 0 1vh #aaffaa;
   }
 `;
+
 const False = styled.input`
   all: unset;
 
@@ -88,45 +129,5 @@ const False = styled.input`
     box-shadow: 0 0 1vh #ffaaaa;
   }
 `;
-
-interface SwitchProps {
-  trueRef: React.RefObject<HTMLInputElement>;
-  falseRef: React.RefObject<HTMLInputElement>;
-  answer: boolean | undefined;
-  setAnswer: React.Dispatch<React.SetStateAction<boolean | undefined>>;
-}
-
-const Switch = ({ trueRef, falseRef, answer, setAnswer }: SwitchProps) => {
-  useEffect(() => {
-    if (trueRef.current && falseRef.current && answer !== undefined) {
-      trueRef.current.checked = answer;
-      falseRef.current.checked = !answer;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answer]);
-
-  return (
-    <Background>
-      <Wrapper>
-        <label htmlFor="true">True</label>
-        <True
-          id="true"
-          onChange={() => setAnswer(true)}
-          ref={trueRef}
-          type="checkbox"
-        />
-      </Wrapper>
-      <Wrapper>
-        <label htmlFor="false">False</label>
-        <False
-          id="false"
-          onChange={() => setAnswer(false)}
-          ref={falseRef}
-          type="checkbox"
-        />
-      </Wrapper>
-    </Background>
-  );
-};
 
 export default Switch;

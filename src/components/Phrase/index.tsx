@@ -3,6 +3,35 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+interface PhraseProps {
+  animation?: string;
+  duration?: string;
+  mainphrase: string;
+  subphrase: string[];
+}
+
+const Phrase = ({
+  animation,
+  duration,
+  mainphrase,
+  subphrase,
+}: PhraseProps) => {
+  useEffect(() => {
+    AOS.init();
+  });
+
+  return (
+    <Background data-aos={animation} data-aos-duration={duration}>
+      <PhraseWrapper>
+        <MainPhrase>{mainphrase}</MainPhrase>
+        {subphrase?.map((p, i) => (
+          <SubPhrase key={i}>{p}</SubPhrase>
+        ))}
+      </PhraseWrapper>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   padding-top: 3vh;
   padding-bottom: 3vh;
@@ -43,34 +72,5 @@ const SubPhrase = styled.p`
     margin-bottom: 0;
   }
 `;
-
-interface PhraseProps {
-  animation?: string;
-  duration?: string;
-  mainphrase: string;
-  subphrase: string[];
-}
-
-const Phrase = ({
-  animation,
-  duration,
-  mainphrase,
-  subphrase,
-}: PhraseProps) => {
-  useEffect(() => {
-    AOS.init();
-  });
-
-  return (
-    <Background data-aos={animation} data-aos-duration={duration}>
-      <PhraseWrapper>
-        <MainPhrase>{mainphrase}</MainPhrase>
-        {subphrase?.map((p, i) => (
-          <SubPhrase key={i}>{p}</SubPhrase>
-        ))}
-      </PhraseWrapper>
-    </Background>
-  );
-};
 
 export default Phrase;

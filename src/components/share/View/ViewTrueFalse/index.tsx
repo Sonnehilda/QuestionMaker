@@ -2,6 +2,81 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Switch from "../../../Switch";
 
+interface TfViewProps {
+  questionName: string;
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const TfView = ({ questionName, setViewState }: TfViewProps) => {
+  const [answer, setAnswer] = useState<boolean>();
+
+  const trueRef = useRef<HTMLInputElement>(null);
+  const falseRef = useRef<HTMLInputElement>(null);
+
+  const question: string[] = JSON.parse(
+    localStorage.getItem(questionName) || ""
+  );
+
+  const deleteQuestion = () => {
+    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTotal = total.filter((v) => {
+      return v !== questionName;
+    });
+    const tf: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTF = tf.filter((v) => {
+      return v !== questionName;
+    });
+    localStorage.setItem("Total", JSON.stringify(filteredTotal));
+    localStorage.setItem("TF", JSON.stringify(filteredTF));
+    localStorage.removeItem(questionName);
+
+    setViewState("");
+  };
+
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setViewState("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Background>
+      <SubWrapper>
+        <Leave onClick={() => setViewState("")}>← Close</Leave>
+        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
+      </SubWrapper>
+      <Wrapper>
+        <Title>{question[0]}</Title>
+      </Wrapper>
+      <Wrapper>
+        <Switch
+          trueRef={trueRef}
+          falseRef={falseRef}
+          answer={answer}
+          setAnswer={setAnswer}
+        />
+      </Wrapper>
+      <Answer selected={answer} answer={question[1]}>
+        {answer !== undefined &&
+        !(
+          trueRef.current?.checked === false &&
+          falseRef.current?.checked === false
+        )
+          ? answer === Boolean(question[1])
+            ? "Correct Answer!"
+            : "Wrong Answer!"
+          : ""}
+      </Answer>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   position: fixed;
 
@@ -124,80 +199,5 @@ const Answer = styled.div<AnswerProps>`
   font-size: 2vh;
   font-weight: 600;
 `;
-
-interface TfViewProps {
-  questionName: string;
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const TfView = ({ questionName, setViewState }: TfViewProps) => {
-  const [answer, setAnswer] = useState<boolean>();
-
-  const trueRef = useRef<HTMLInputElement>(null);
-  const falseRef = useRef<HTMLInputElement>(null);
-
-  const question: string[] = JSON.parse(
-    localStorage.getItem(questionName) || ""
-  );
-
-  const deleteQuestion = () => {
-    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const filteredTotal = total.filter((v) => {
-      return v !== questionName;
-    });
-    const tf: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const filteredTF = tf.filter((v) => {
-      return v !== questionName;
-    });
-    localStorage.setItem("Total", JSON.stringify(filteredTotal));
-    localStorage.setItem("TF", JSON.stringify(filteredTF));
-    localStorage.removeItem(questionName);
-
-    setViewState("");
-  };
-
-  useEffect(() => {
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setViewState("");
-      }
-    };
-
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <Background>
-      <SubWrapper>
-        <Leave onClick={() => setViewState("")}>← Close</Leave>
-        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
-      </SubWrapper>
-      <Wrapper>
-        <Title>{question[0]}</Title>
-      </Wrapper>
-      <Wrapper>
-        <Switch
-          trueRef={trueRef}
-          falseRef={falseRef}
-          answer={answer}
-          setAnswer={setAnswer}
-        />
-      </Wrapper>
-      <Answer selected={answer} answer={question[1]}>
-        {answer !== undefined &&
-        !(
-          trueRef.current?.checked === false &&
-          falseRef.current?.checked === false
-        )
-          ? answer === Boolean(question[1])
-            ? "Correct Answer!"
-            : "Wrong Answer!"
-          : ""}
-      </Answer>
-    </Background>
-  );
-};
 
 export default TfView;

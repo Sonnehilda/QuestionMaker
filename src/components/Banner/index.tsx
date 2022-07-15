@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import { banner } from "../../assets/images";
 
+const Banner = () => {
+  return (
+    <Background>
+      <TitleWrapper>
+        <Title>Question Maker</Title>
+        <SubTitle>Make Your Own Various Questions!</SubTitle>
+      </TitleWrapper>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   background-image: url(${banner});
   background-size: cover;
@@ -35,16 +46,5 @@ const SubTitle = styled.h2`
   font-size: 3vh;
   font-weight: 100;
 `;
-
-const Banner = () => {
-  return (
-    <Background>
-      <TitleWrapper>
-        <Title>Question Maker</Title>
-        <SubTitle>Make Your Own Various Questions!</SubTitle>
-      </TitleWrapper>
-    </Background>
-  );
-};
 
 export default Banner;

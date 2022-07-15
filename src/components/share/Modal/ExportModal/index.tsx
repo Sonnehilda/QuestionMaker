@@ -1,6 +1,61 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
+interface ExportModalProps {
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ExportModal = ({ setViewState }: ExportModalProps) => {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [status, setStatus] = useState<string>(
+    "Click the block above to copy the question code!"
+  );
+
+  const exportStorage = () => {
+    if (!localStorage.getItem("Total")) {
+      return;
+    }
+    const Total: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const exportedStorage: string[] = [];
+    // eslint-disable-next-line array-callback-return
+    Total.map((v) => {
+      exportedStorage.push(v);
+      exportedStorage.push(localStorage.getItem(v) || "undefined");
+    });
+    if (inputRef.current)
+      inputRef.current.value = JSON.stringify(exportedStorage);
+  };
+
+  const copyExportedStorage = () => {
+    if (inputRef.current) {
+      if (inputRef.current.value !== "") {
+        navigator.clipboard.writeText(inputRef.current.value);
+        setStatus("Copied To Clipboard!");
+      } else {
+        setStatus("Copy Failed!");
+      }
+    }
+  };
+
+  useEffect(() => {
+    exportStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Background>
+      <CloseWrapper>
+        <Close onClick={() => setViewState("")}>✕</Close>
+      </CloseWrapper>
+      <Title>Export Question</Title>
+      <TextareaWrapper onClick={copyExportedStorage}>
+        <Textarea ref={inputRef} disabled={true} />
+      </TextareaWrapper>
+      <SubTitle>{status}</SubTitle>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   position: fixed;
 
@@ -103,60 +158,5 @@ const Textarea = styled.textarea`
 const SubTitle = styled.div`
   font-size: 2vh;
 `;
-
-interface ExportModalProps {
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ExportModal = ({ setViewState }: ExportModalProps) => {
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [status, setStatus] = useState<string>(
-    "Click the block above to copy the question code!"
-  );
-
-  const exportStorage = () => {
-    if (!localStorage.getItem("Total")) {
-      return;
-    }
-    const Total: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const exportedStorage: string[] = [];
-    // eslint-disable-next-line array-callback-return
-    Total.map((v) => {
-      exportedStorage.push(v);
-      exportedStorage.push(localStorage.getItem(v) || "undefined");
-    });
-    if (inputRef.current)
-      inputRef.current.value = JSON.stringify(exportedStorage);
-  };
-
-  const copyExportedStorage = () => {
-    if (inputRef.current) {
-      if (inputRef.current.value !== "") {
-        navigator.clipboard.writeText(inputRef.current.value);
-        setStatus("Copied To Clipboard!");
-      } else {
-        setStatus("Copy Failed!");
-      }
-    }
-  };
-
-  useEffect(() => {
-    exportStorage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <Background>
-      <CloseWrapper>
-        <Close onClick={() => setViewState("")}>✕</Close>
-      </CloseWrapper>
-      <Title>Export Question</Title>
-      <TextareaWrapper onClick={copyExportedStorage}>
-        <Textarea ref={inputRef} disabled={true} />
-      </TextareaWrapper>
-      <SubTitle>{status}</SubTitle>
-    </Background>
-  );
-};
 
 export default ExportModal;

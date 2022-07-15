@@ -1,6 +1,65 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+interface FcViewProps {
+  questionName: string;
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const FcView = ({ questionName, setViewState }: FcViewProps) => {
+  const [isRevealed, setIsRevealed] = useState<boolean>(false);
+
+  const question: string[] = JSON.parse(
+    localStorage.getItem(questionName) || ""
+  );
+
+  const deleteQuestion = () => {
+    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredTotal = total.filter((v) => {
+      return v !== questionName;
+    });
+    const fc: string[] = JSON.parse(localStorage.getItem("Total") || "");
+    const filteredFC = fc.filter((v) => {
+      return v !== questionName;
+    });
+    localStorage.setItem("Total", JSON.stringify(filteredTotal));
+    localStorage.setItem("FC", JSON.stringify(filteredFC));
+    localStorage.removeItem(questionName);
+
+    setViewState("");
+  };
+
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setViewState("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Background isRevealed={isRevealed}>
+      <SubWrapper>
+        <Leave onClick={() => setViewState("")}>← Close</Leave>
+        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
+      </SubWrapper>
+      <Card onClick={() => setIsRevealed(!isRevealed)}>
+        <Face>
+          <Title>{question[0]}</Title>
+        </Face>
+        <Back>
+          <Title>{question[1]}</Title>
+        </Back>
+      </Card>
+      <SubTitle>Click To Check Card {isRevealed ? "Face" : "Back"}.</SubTitle>
+    </Background>
+  );
+};
+
 interface BackgroundProps {
   isRevealed: boolean;
 }
@@ -172,64 +231,5 @@ const SubTitle = styled.h3`
   font-weight: 100;
   text-align: center;
 `;
-
-interface FcViewProps {
-  questionName: string;
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const FcView = ({ questionName, setViewState }: FcViewProps) => {
-  const [isRevealed, setIsRevealed] = useState<boolean>(false);
-
-  const question: string[] = JSON.parse(
-    localStorage.getItem(questionName) || ""
-  );
-
-  const deleteQuestion = () => {
-    const total: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const filteredTotal = total.filter((v) => {
-      return v !== questionName;
-    });
-    const fc: string[] = JSON.parse(localStorage.getItem("Total") || "");
-    const filteredFC = fc.filter((v) => {
-      return v !== questionName;
-    });
-    localStorage.setItem("Total", JSON.stringify(filteredTotal));
-    localStorage.setItem("FC", JSON.stringify(filteredFC));
-    localStorage.removeItem(questionName);
-
-    setViewState("");
-  };
-
-  useEffect(() => {
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setViewState("");
-      }
-    };
-
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <Background isRevealed={isRevealed}>
-      <SubWrapper>
-        <Leave onClick={() => setViewState("")}>← Close</Leave>
-        <Delete onClick={() => deleteQuestion()}>✕ Delete</Delete>
-      </SubWrapper>
-      <Card onClick={() => setIsRevealed(!isRevealed)}>
-        <Face>
-          <Title>{question[0]}</Title>
-        </Face>
-        <Back>
-          <Title>{question[1]}</Title>
-        </Back>
-      </Card>
-      <SubTitle>Click To Check Card {isRevealed ? "Face" : "Back"}.</SubTitle>
-    </Background>
-  );
-};
 
 export default FcView;

@@ -3,6 +3,39 @@ import { Link } from "react-router-dom";
 import ActionMenuMobile from "./Mobile";
 import { importImage, exportImage } from "../../assets/images";
 
+interface MenuProps {
+  animation: string;
+  duration: string;
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ActionMenu = ({ animation, duration, setViewState }: MenuProps) => {
+  return (
+    <>
+      <ActionMenuMobile setViewState={setViewState} />
+      <Background data-aos={animation} data-aos-duration={duration}>
+        <MenuTitle>Choose Action Type</MenuTitle>
+        <CardWrapper>
+          <Card
+            to="/make"
+            image={importImage}
+            onClick={() => setViewState("Import")}
+          >
+            <Title>Import Question</Title>
+          </Card>
+          <Card
+            to="/make"
+            image={exportImage}
+            onClick={() => setViewState("Export")}
+          >
+            <Title>Export Question</Title>
+          </Card>
+        </CardWrapper>
+      </Background>
+    </>
+  );
+};
+
 const Background = styled.div`
   background-color: #f6f6f6;
 
@@ -99,38 +132,5 @@ const Title = styled.div`
 
   filter: drop-shadow(0 0 0.25vh #000);
 `;
-
-interface MenuProps {
-  animation: string;
-  duration: string;
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ActionMenu = ({ animation, duration, setViewState }: MenuProps) => {
-  return (
-    <>
-      <ActionMenuMobile setViewState={setViewState} />
-      <Background data-aos={animation} data-aos-duration={duration}>
-        <MenuTitle>Choose Action Type</MenuTitle>
-        <CardWrapper>
-          <Card
-            to="/make"
-            image={importImage}
-            onClick={() => setViewState("Import")}
-          >
-            <Title>Import Question</Title>
-          </Card>
-          <Card
-            to="/make"
-            image={exportImage}
-            onClick={() => setViewState("Export")}
-          >
-            <Title>Export Question</Title>
-          </Card>
-        </CardWrapper>
-      </Background>
-    </>
-  );
-};
 
 export default ActionMenu;

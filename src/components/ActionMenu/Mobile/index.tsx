@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+interface MenuMobileProps {
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ActionMenuMobile = ({ setViewState }: MenuMobileProps) => {
+  return (
+    <Background>
+      <MenuTitle>Choose Action Type</MenuTitle>
+      <CardWrapper>
+        <Card to="/make" onClick={() => setViewState("Import")}>
+          <Title>Import Question</Title>
+        </Card>
+        <Card to="/make" onClick={() => setViewState("Export")}>
+          <Title>Export Question</Title>
+        </Card>
+      </CardWrapper>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   background-color: #f6f6f6;
 
@@ -66,25 +86,5 @@ const Title = styled.div`
   font-weight: 100;
   text-align: center;
 `;
-
-interface MenuMobileProps {
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ActionMenuMobile = ({ setViewState }: MenuMobileProps) => {
-  return (
-    <Background>
-      <MenuTitle>Choose Action Type</MenuTitle>
-      <CardWrapper>
-        <Card to="/make" onClick={() => setViewState("Import")}>
-          <Title>Import Question</Title>
-        </Card>
-        <Card to="/make" onClick={() => setViewState("Export")}>
-          <Title>Export Question</Title>
-        </Card>
-      </CardWrapper>
-    </Background>
-  );
-};
 
 export default ActionMenuMobile;

@@ -1,6 +1,28 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const QuestionMenuMobile = () => {
+  return (
+    <Background>
+      <MenuTitle>Choose Question Type</MenuTitle>
+      <CardWrapper>
+        <Card to="/make/mc">
+          <Title>Multiple Choice Question</Title>
+        </Card>
+        <Card to="/make/sa">
+          <Title>Short Answer Question</Title>
+        </Card>
+        <Card to="/make/tf">
+          <Title>True or False Question</Title>
+        </Card>
+        <Card to="/make/fc">
+          <Title>Flash Card</Title>
+        </Card>
+      </CardWrapper>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   background-color: #f6f6f6;
 
@@ -66,27 +88,5 @@ const Title = styled.div`
   font-weight: 100;
   text-align: center;
 `;
-
-const QuestionMenuMobile = () => {
-  return (
-    <Background>
-      <MenuTitle>Choose Question Type</MenuTitle>
-      <CardWrapper>
-        <Card to="/make/mc">
-          <Title>Multiple Choice Question</Title>
-        </Card>
-        <Card to="/make/sa">
-          <Title>Short Answer Question</Title>
-        </Card>
-        <Card to="/make/tf">
-          <Title>True or False Question</Title>
-        </Card>
-        <Card to="/make/fc">
-          <Title>Flash Card</Title>
-        </Card>
-      </CardWrapper>
-    </Background>
-  );
-};
 
 export default QuestionMenuMobile;

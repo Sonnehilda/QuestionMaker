@@ -2,52 +2,6 @@ import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import stringSimilarity from "string-similarity";
 
-interface FieldWrapperProps {
-  word: string;
-}
-
-const FieldWrapper = styled.div<FieldWrapperProps>`
-  width: 76vh;
-  min-height: 6vh;
-
-  @media screen and (max-device-width: 640px) {
-    width: 80vw;
-  }
-
-  display: flex;
-  ${(props) =>
-    props.word.length > 15 ? "overflow: auto;" : "justify-content: center;"}
-  align-items: center;
-
-  @media screen and (max-device-width: 640px) {
-    ${(props) =>
-      props.word.length > 9 ? "overflow: auto;" : "justify-content: center;"}
-  }
-`;
-
-interface FieldProps {
-  status: boolean;
-}
-
-const Field = styled.input<FieldProps>`
-  all: unset;
-
-  margin-left: 0.5vh;
-  margin-right: 0.5vh;
-  margin-bottom: 1vh;
-
-  width: 4vh;
-  height: 4vh;
-
-  font-size: 3vh;
-  text-align: center;
-
-  border-bottom: 0.1vh solid #aaa;
-  box-sizing: border-box;
-
-  ${(props) => (props.status === true ? "color: #aaffaa;" : "color: #000;")}
-`;
-
 interface InputProps {
   word: string;
   status: boolean;
@@ -154,5 +108,51 @@ const Input = ({ word, status, setStatus }: InputProps) => {
     </>
   );
 };
+
+interface FieldWrapperProps {
+  word: string;
+}
+
+const FieldWrapper = styled.div<FieldWrapperProps>`
+  width: 76vh;
+  min-height: 6vh;
+
+  @media screen and (max-device-width: 640px) {
+    width: 80vw;
+  }
+
+  display: flex;
+  ${(props) =>
+    props.word.length > 15 ? "overflow: auto;" : "justify-content: center;"}
+  align-items: center;
+
+  @media screen and (max-device-width: 640px) {
+    ${(props) =>
+      props.word.length > 9 ? "overflow: auto;" : "justify-content: center;"}
+  }
+`;
+
+interface FieldProps {
+  status: boolean;
+}
+
+const Field = styled.input<FieldProps>`
+  all: unset;
+
+  margin-left: 0.5vh;
+  margin-right: 0.5vh;
+  margin-bottom: 1vh;
+
+  width: 4vh;
+  height: 4vh;
+
+  font-size: 3vh;
+  text-align: center;
+
+  border-bottom: 0.1vh solid #aaa;
+  box-sizing: border-box;
+
+  ${(props) => (props.status === true ? "color: #aaffaa;" : "color: #000;")}
+`;
 
 export default Input;

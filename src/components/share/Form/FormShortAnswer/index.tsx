@@ -7,6 +7,102 @@ import {
   TitleNotExistException,
 } from "../genericWarning";
 
+interface SaFormProps {
+  animation: string;
+  duration: string;
+  warning: string;
+  setWarning: React.Dispatch<React.SetStateAction<string>>;
+  navigate: NavigateFunction;
+}
+
+const SaForm = ({
+  animation,
+  duration,
+  warning,
+  setWarning,
+  navigate,
+}: SaFormProps) => {
+  const warningRef = useRef<string>("");
+  const titleRef = useRef<HTMLInputElement>(null);
+  const answerRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    warningRef.current = warning;
+  }, [warning]);
+
+  useEffect(() => {
+    titleRef.current?.focus();
+
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        if (warningRef.current !== "") setWarning("");
+        else if (
+          titleRef.current ||
+          answerRef.current === document.activeElement
+        )
+          makeQuestion();
+      }
+      if (e.key === "Escape") {
+        if (warningRef.current !== "") setWarning("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const makeQuestion = () => {
+    if (titleRef.current && titleRef.current.value === "") {
+      setWarning(TitleNotExistException);
+    } else if (answerRef.current && answerRef.current.value.length <= 0) {
+      setWarning(AnswerNotExistException);
+    } else if (titleRef.current && answerRef.current) {
+      const now = Date.now();
+      localStorage.setItem(
+        "SA" + now,
+        JSON.stringify([titleRef.current.value, answerRef.current.value])
+      );
+      if (localStorage.getItem("SA")) {
+        const SA = JSON.parse(localStorage.getItem("SA") || "");
+        localStorage.setItem("SA", JSON.stringify([now, ...SA]));
+      } else {
+        localStorage.setItem("SA", JSON.stringify([now]));
+      }
+      if (localStorage.getItem("Total")) {
+        const Total = JSON.parse(localStorage.getItem("Total") || "");
+        localStorage.setItem("Total", JSON.stringify(["SA" + now, ...Total]));
+      } else localStorage.setItem("Total", JSON.stringify(["SA" + now]));
+      alert(
+        SucceededMessage[0] +
+          `"${titleRef.current.value}"` +
+          SucceededMessage[1]
+      );
+      alert(SucceededMessage[2]);
+      navigate("/make", { replace: true });
+    }
+  };
+
+  return (
+    <Background data-aos={animation} data-aos-duration={duration}>
+      <LeaveWrapper>
+        <Leave to="/make">← Go back</Leave>
+      </LeaveWrapper>
+      <InputWrapper>
+        <InputName>Question Name</InputName>
+        <Input tabIndex={1} ref={titleRef} maxLength={100} />
+      </InputWrapper>
+      <InputWrapper>
+        <InputName>Correct Answer</InputName>
+        <Input tabIndex={2} ref={answerRef} maxLength={50} />
+      </InputWrapper>
+      <Button tabIndex={3} onClick={() => makeQuestion()}>
+        Make One!
+      </Button>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   padding-top: 3vh;
   padding-bottom: 3vh;
@@ -137,101 +233,5 @@ const Button = styled.button`
     filter: brightness(95%) drop-shadow(0 0 0.25vh #ddd);
   }
 `;
-
-interface SaFormProps {
-  animation: string;
-  duration: string;
-  warning: string;
-  setWarning: React.Dispatch<React.SetStateAction<string>>;
-  navigate: NavigateFunction;
-}
-
-const SaForm = ({
-  animation,
-  duration,
-  warning,
-  setWarning,
-  navigate,
-}: SaFormProps) => {
-  const warningRef = useRef<string>("");
-  const titleRef = useRef<HTMLInputElement>(null);
-  const answerRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    warningRef.current = warning;
-  }, [warning]);
-
-  useEffect(() => {
-    titleRef.current?.focus();
-
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        if (warningRef.current !== "") setWarning("");
-        else if (
-          titleRef.current ||
-          answerRef.current === document.activeElement
-        )
-          makeQuestion();
-      }
-      if (e.key === "Escape") {
-        if (warningRef.current !== "") setWarning("");
-      }
-    };
-
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const makeQuestion = () => {
-    if (titleRef.current && titleRef.current.value === "") {
-      setWarning(TitleNotExistException);
-    } else if (answerRef.current && answerRef.current.value.length <= 0) {
-      setWarning(AnswerNotExistException);
-    } else if (titleRef.current && answerRef.current) {
-      const now = Date.now();
-      localStorage.setItem(
-        "SA" + now,
-        JSON.stringify([titleRef.current.value, answerRef.current.value])
-      );
-      if (localStorage.getItem("SA")) {
-        const SA = JSON.parse(localStorage.getItem("SA") || "");
-        localStorage.setItem("SA", JSON.stringify([now, ...SA]));
-      } else {
-        localStorage.setItem("SA", JSON.stringify([now]));
-      }
-      if (localStorage.getItem("Total")) {
-        const Total = JSON.parse(localStorage.getItem("Total") || "");
-        localStorage.setItem("Total", JSON.stringify(["SA" + now, ...Total]));
-      } else localStorage.setItem("Total", JSON.stringify(["SA" + now]));
-      alert(
-        SucceededMessage[0] +
-          `"${titleRef.current.value}"` +
-          SucceededMessage[1]
-      );
-      alert(SucceededMessage[2]);
-      navigate("/make", { replace: true });
-    }
-  };
-
-  return (
-    <Background data-aos={animation} data-aos-duration={duration}>
-      <LeaveWrapper>
-        <Leave to="/make">← Go back</Leave>
-      </LeaveWrapper>
-      <InputWrapper>
-        <InputName>Question Name</InputName>
-        <Input tabIndex={1} ref={titleRef} maxLength={100} />
-      </InputWrapper>
-      <InputWrapper>
-        <InputName>Correct Answer</InputName>
-        <Input tabIndex={2} ref={answerRef} maxLength={50} />
-      </InputWrapper>
-      <Button tabIndex={3} onClick={() => makeQuestion()}>
-        Make One!
-      </Button>
-    </Background>
-  );
-};
 
 export default SaForm;

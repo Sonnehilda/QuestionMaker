@@ -4,6 +4,97 @@ import { Link, NavigateFunction } from "react-router-dom";
 import { SucceededMessage } from "../genericWarning";
 import { AnswerNotExistException, TitleNotExistException } from "./constant";
 
+interface FcFormProps {
+  animation: string;
+  duration: string;
+  warning: string;
+  setWarning: React.Dispatch<React.SetStateAction<string>>;
+  navigate: NavigateFunction;
+}
+
+const FcForm = ({
+  animation,
+  duration,
+  warning,
+  setWarning,
+  navigate,
+}: FcFormProps) => {
+  const warningRef = useRef<string>("");
+  const faceRef = useRef<HTMLInputElement>(null);
+  const backRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    warningRef.current = warning;
+  }, [warning]);
+
+  useEffect(() => {
+    faceRef.current?.focus();
+
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        if (warningRef.current !== "") setWarning("");
+        else if (faceRef.current || backRef.current === document.activeElement)
+          makeQuestion();
+      }
+      if (e.key === "Escape") {
+        if (warningRef.current !== "") setWarning("");
+      }
+    };
+
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const makeQuestion = () => {
+    if (faceRef.current && faceRef.current.value === "") {
+      setWarning(TitleNotExistException);
+    } else if (backRef.current && backRef.current.value.length <= 0) {
+      setWarning(AnswerNotExistException);
+    } else if (faceRef.current && backRef.current) {
+      const now = Date.now();
+      localStorage.setItem(
+        "FC" + now,
+        JSON.stringify([faceRef.current.value, backRef.current.value])
+      );
+      if (localStorage.getItem("FC")) {
+        const FC = JSON.parse(localStorage.getItem("FC") || "");
+        localStorage.setItem("FC", JSON.stringify([now, ...FC]));
+      } else {
+        localStorage.setItem("FC", JSON.stringify([now]));
+      }
+      if (localStorage.getItem("Total")) {
+        const Total = JSON.parse(localStorage.getItem("Total") || "");
+        localStorage.setItem("Total", JSON.stringify(["FC" + now, ...Total]));
+      } else localStorage.setItem("Total", JSON.stringify(["FC" + now]));
+      alert(
+        SucceededMessage[0] + `"${faceRef.current.value}"` + SucceededMessage[1]
+      );
+      alert(SucceededMessage[2]);
+      navigate("/make", { replace: true });
+    }
+  };
+
+  return (
+    <Background data-aos={animation} data-aos-duration={duration}>
+      <LeaveWrapper>
+        <Leave to="/make">← Go back</Leave>
+      </LeaveWrapper>
+      <InputWrapper>
+        <InputName>Card Face</InputName>
+        <Input tabIndex={1} ref={faceRef} maxLength={50} />
+      </InputWrapper>
+      <InputWrapper>
+        <InputName>Card Back</InputName>
+        <Input tabIndex={2} ref={backRef} maxLength={50} />
+      </InputWrapper>
+      <Button tabIndex={3} onClick={() => makeQuestion()}>
+        Make One!
+      </Button>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   padding-top: 3vh;
   padding-bottom: 3vh;
@@ -134,96 +225,5 @@ const Button = styled.button`
     filter: brightness(95%) drop-shadow(0 0 0.25vh #ddd);
   }
 `;
-
-interface FcFormProps {
-  animation: string;
-  duration: string;
-  warning: string;
-  setWarning: React.Dispatch<React.SetStateAction<string>>;
-  navigate: NavigateFunction;
-}
-
-const FcForm = ({
-  animation,
-  duration,
-  warning,
-  setWarning,
-  navigate,
-}: FcFormProps) => {
-  const warningRef = useRef<string>("");
-  const faceRef = useRef<HTMLInputElement>(null);
-  const backRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    warningRef.current = warning;
-  }, [warning]);
-
-  useEffect(() => {
-    faceRef.current?.focus();
-
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        if (warningRef.current !== "") setWarning("");
-        else if (faceRef.current || backRef.current === document.activeElement)
-          makeQuestion();
-      }
-      if (e.key === "Escape") {
-        if (warningRef.current !== "") setWarning("");
-      }
-    };
-
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const makeQuestion = () => {
-    if (faceRef.current && faceRef.current.value === "") {
-      setWarning(TitleNotExistException);
-    } else if (backRef.current && backRef.current.value.length <= 0) {
-      setWarning(AnswerNotExistException);
-    } else if (faceRef.current && backRef.current) {
-      const now = Date.now();
-      localStorage.setItem(
-        "FC" + now,
-        JSON.stringify([faceRef.current.value, backRef.current.value])
-      );
-      if (localStorage.getItem("FC")) {
-        const FC = JSON.parse(localStorage.getItem("FC") || "");
-        localStorage.setItem("FC", JSON.stringify([now, ...FC]));
-      } else {
-        localStorage.setItem("FC", JSON.stringify([now]));
-      }
-      if (localStorage.getItem("Total")) {
-        const Total = JSON.parse(localStorage.getItem("Total") || "");
-        localStorage.setItem("Total", JSON.stringify(["FC" + now, ...Total]));
-      } else localStorage.setItem("Total", JSON.stringify(["FC" + now]));
-      alert(
-        SucceededMessage[0] + `"${faceRef.current.value}"` + SucceededMessage[1]
-      );
-      alert(SucceededMessage[2]);
-      navigate("/make", { replace: true });
-    }
-  };
-
-  return (
-    <Background data-aos={animation} data-aos-duration={duration}>
-      <LeaveWrapper>
-        <Leave to="/make">← Go back</Leave>
-      </LeaveWrapper>
-      <InputWrapper>
-        <InputName>Card Face</InputName>
-        <Input tabIndex={1} ref={faceRef} maxLength={50} />
-      </InputWrapper>
-      <InputWrapper>
-        <InputName>Card Back</InputName>
-        <Input tabIndex={2} ref={backRef} maxLength={50} />
-      </InputWrapper>
-      <Button tabIndex={3} onClick={() => makeQuestion()}>
-        Make One!
-      </Button>
-    </Background>
-  );
-};
 
 export default FcForm;

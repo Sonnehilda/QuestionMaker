@@ -1,6 +1,61 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+interface OptionsProps {
+  options: string[];
+  setOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  index: number;
+  option: string;
+  setWarning: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Options = ({
+  options,
+  setOptions,
+  index,
+  option,
+  setWarning,
+}: OptionsProps) => {
+  const [isAnswer, setIsAnswer] = useState<boolean>(false);
+
+  const deleteOption = () => {
+    setOptions(
+      options.filter((s) => {
+        return s !== option;
+      })
+    );
+    setWarning("");
+  };
+
+  const answerOption = () => {
+    if (options[index] && options[index].includes("@ANSWER")) {
+      options[index] = options[index].replaceAll("@ANSWER", "");
+      setIsAnswer(false);
+    } else {
+      options[index] = `@ANSWER${options[index]}`;
+      setIsAnswer(true);
+    }
+  };
+
+  useEffect(() => {
+    if (option.includes("@ANSWER")) setIsAnswer(true);
+    else setIsAnswer(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options]);
+
+  return (
+    <Background>
+      <Phrase>
+        {index + 1}. {option.replace("@ANSWER", "")}
+      </Phrase>
+      <Answer onClick={() => answerOption()} isAnswer={isAnswer}>
+        {isAnswer ? "Answer" : "Not Answer"}
+      </Answer>
+      <Delete onClick={() => deleteOption()}>✕</Delete>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   padding-bottom: 2vh;
   margin-top: 2vh;
@@ -89,60 +144,5 @@ const Delete = styled.div`
     filter: brightness(75%);
   }
 `;
-
-interface OptionsProps {
-  options: string[];
-  setOptions: React.Dispatch<React.SetStateAction<string[]>>;
-  index: number;
-  option: string;
-  setWarning: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const Options = ({
-  options,
-  setOptions,
-  index,
-  option,
-  setWarning,
-}: OptionsProps) => {
-  const [isAnswer, setIsAnswer] = useState<boolean>(false);
-
-  const deleteOption = () => {
-    setOptions(
-      options.filter((s) => {
-        return s !== option;
-      })
-    );
-    setWarning("");
-  };
-
-  const answerOption = () => {
-    if (options[index] && options[index].includes("@ANSWER")) {
-      options[index] = options[index].replaceAll("@ANSWER", "");
-      setIsAnswer(false);
-    } else {
-      options[index] = `@ANSWER${options[index]}`;
-      setIsAnswer(true);
-    }
-  };
-
-  useEffect(() => {
-    if (option.includes("@ANSWER")) setIsAnswer(true);
-    else setIsAnswer(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options]);
-
-  return (
-    <Background>
-      <Phrase>
-        {index + 1}. {option.replace("@ANSWER", "")}
-      </Phrase>
-      <Answer onClick={() => answerOption()} isAnswer={isAnswer}>
-        {isAnswer ? "Answer" : "Not Answer"}
-      </Answer>
-      <Delete onClick={() => deleteOption()}>✕</Delete>
-    </Background>
-  );
-};
 
 export default Options;

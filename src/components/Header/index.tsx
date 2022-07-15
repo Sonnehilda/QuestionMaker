@@ -1,6 +1,21 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+const Header = () => {
+  return (
+    <Background>
+      <LeftContents>
+        <Title to="/">
+          <span>Q</span>uestion <span>M</span>aker
+        </Title>
+        <Contents to="/make">Make Questions</Contents>
+        <Contents to="/review">Saved Questions</Contents>
+        <Contents to="/about">About</Contents>
+      </LeftContents>
+    </Background>
+  );
+};
+
 const Background = styled.header`
   background-color: #fff;
 
@@ -100,20 +115,5 @@ const LeftContents = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-const Header = () => {
-  return (
-    <Background>
-      <LeftContents>
-        <Title to="/">
-          <span>Q</span>uestion <span>M</span>aker
-        </Title>
-        <Contents to="/make">Make Questions</Contents>
-        <Contents to="/review">Saved Questions</Contents>
-        <Contents to="/about">About</Contents>
-      </LeftContents>
-    </Background>
-  );
-};
 
 export default Header;

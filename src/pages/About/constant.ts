@@ -13,3 +13,4 @@ export const ContactSubPhrase = [
   "E-Mail : winhave@naver.com",
   "Discord : rals#1031",
 ];
+

@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+interface ModalProps {
+  warning: string;
+  setWarning: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const WarningModal = ({ warning, setWarning }: ModalProps) => {
+  return (
+    <Background>
+      <Close onClick={() => setWarning("")}>✕</Close>
+      <Wrapper>
+        <Message>{warning}</Message>
+        <Button onClick={() => setWarning("")}>OK</Button>
+      </Wrapper>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   background-color: #f6f6f6;
 
@@ -68,22 +85,5 @@ const Button = styled.button`
     filter: brightness(95%) drop-shadow(0 0 0.25vh #ddd);
   }
 `;
-
-interface ModalProps {
-  warning: string;
-  setWarning: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const WarningModal = ({ warning, setWarning }: ModalProps) => {
-  return (
-    <Background>
-      <Close onClick={() => setWarning("")}>✕</Close>
-      <Wrapper>
-        <Message>{warning}</Message>
-        <Button onClick={() => setWarning("")}>OK</Button>
-      </Wrapper>
-    </Background>
-  );
-};
 
 export default WarningModal;

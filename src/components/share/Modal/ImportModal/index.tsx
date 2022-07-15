@@ -2,6 +2,78 @@ import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { CodeNotExistException, CodeNotValidException } from "./constant";
 
+interface ImportModalProps {
+  setViewState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ImportModal = ({ setViewState }: ImportModalProps) => {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const importStorage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (inputRef.current)
+      if (inputRef.current.value === "") {
+        alert(CodeNotExistException);
+      } else {
+        try {
+          JSON.parse(inputRef.current.value);
+        } catch {
+          alert(CodeNotValidException);
+          return;
+        }
+
+        localStorage.clear();
+
+        let targetStorage: string[] = JSON.parse(inputRef.current.value);
+        const totalStorage: string[] = [];
+        const mcStorage: string[] = [];
+        const saStorage: string[] = [];
+        const tfStorage: string[] = [];
+        const fcStorage: string[] = [];
+        let id: string;
+
+        // eslint-disable-next-line array-callback-return
+        targetStorage.map((v, i) => {
+          if (i % 2) {
+            localStorage.setItem(id, v);
+            if (id.includes("MC")) mcStorage.push(id.replace("MC", ""));
+            else if (id.includes("SA")) saStorage.push(id.replace("SA", ""));
+            else if (id.includes("TF")) tfStorage.push(id.replace("TF", ""));
+            else if (id.includes("FC")) fcStorage.push(id.replace("FC", ""));
+          } else {
+            totalStorage.push(v);
+            id = v;
+          }
+        });
+        localStorage.setItem("Total", JSON.stringify(totalStorage));
+        localStorage.setItem("MC", JSON.stringify(mcStorage));
+        localStorage.setItem("SA", JSON.stringify(saStorage));
+        localStorage.setItem("TF", JSON.stringify(tfStorage));
+        localStorage.setItem("FC", JSON.stringify(fcStorage));
+
+        alert("Successfully fetched " + totalStorage.length + " question(s).");
+      }
+  };
+
+  return (
+    <Background>
+      <CloseWrapper>
+        <Close onClick={() => setViewState("")}>✕</Close>
+      </CloseWrapper>
+      <Title>Import Question</Title>
+      <Wrapper onSubmit={(e) => importStorage(e)}>
+        <Textarea ref={inputRef} placeholder="Paste a Question Code Here!" />
+        <Button>Import</Button>
+      </Wrapper>
+      <SubTitle>Once you import, all the questions will be discarded.</SubTitle>
+    </Background>
+  );
+};
+
 const Background = styled.div`
   position: fixed;
 
@@ -130,77 +202,5 @@ const Button = styled.button`
 const SubTitle = styled.div`
   font-size: 2vh;
 `;
-
-interface ImportModalProps {
-  setViewState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ImportModal = ({ setViewState }: ImportModalProps) => {
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const importStorage = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (inputRef.current)
-      if (inputRef.current.value === "") {
-        alert(CodeNotExistException);
-      } else {
-        try {
-          JSON.parse(inputRef.current.value);
-        } catch {
-          alert(CodeNotValidException);
-          return;
-        }
-
-        localStorage.clear();
-
-        let targetStorage: string[] = JSON.parse(inputRef.current.value);
-        const totalStorage: string[] = [];
-        const mcStorage: string[] = [];
-        const saStorage: string[] = [];
-        const tfStorage: string[] = [];
-        const fcStorage: string[] = [];
-        let id: string;
-
-        // eslint-disable-next-line array-callback-return
-        targetStorage.map((v, i) => {
-          if (i % 2) {
-            localStorage.setItem(id, v);
-            if (id.includes("MC")) mcStorage.push(id.replace("MC", ""));
-            else if (id.includes("SA")) saStorage.push(id.replace("SA", ""));
-            else if (id.includes("TF")) tfStorage.push(id.replace("TF", ""));
-            else if (id.includes("FC")) fcStorage.push(id.replace("FC", ""));
-          } else {
-            totalStorage.push(v);
-            id = v;
-          }
-        });
-        localStorage.setItem("Total", JSON.stringify(totalStorage));
-        localStorage.setItem("MC", JSON.stringify(mcStorage));
-        localStorage.setItem("SA", JSON.stringify(saStorage));
-        localStorage.setItem("TF", JSON.stringify(tfStorage));
-        localStorage.setItem("FC", JSON.stringify(fcStorage));
-
-        alert("Successfully fetched " + totalStorage.length + " question(s).");
-      }
-  };
-
-  return (
-    <Background>
-      <CloseWrapper>
-        <Close onClick={() => setViewState("")}>✕</Close>
-      </CloseWrapper>
-      <Title>Import Question</Title>
-      <Wrapper onSubmit={(e) => importStorage(e)}>
-        <Textarea ref={inputRef} placeholder="Paste a Question Code Here!" />
-        <Button>Import</Button>
-      </Wrapper>
-      <SubTitle>Once you import, all the questions will be discarded.</SubTitle>
-    </Background>
-  );
-};
 
 export default ImportModal;

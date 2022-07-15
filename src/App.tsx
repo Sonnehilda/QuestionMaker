@@ -12,10 +12,6 @@ import GlobalStyle from "./styles";
 import SavedQuestion from "./pages/Saved";
 import About from "./pages/About";
 
-const Wrapper = styled.div`
-  min-height: 88vh;
-`;
-
 function App() {
   const navigate = useNavigate();
 
@@ -51,5 +47,9 @@ function App() {
     </>
   );
 }
+
+const Wrapper = styled.div`
+  min-height: 88vh;
+`;
 
 export default App;
